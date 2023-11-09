@@ -1,3 +1,64 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  h1 {
+    @apply text-2xl font-bold leading-[35px] tracking-[-0.33px];
+  }
+  h2 {
+    @apply text-xl font-bold leading-[29px] tracking-[-0.25px];
+  }
+  h3 {
+    @apply text-lg font-bold leading-[26px] tracking-[-0.25px];
+  }
+  h4 {
+    @apply text-sm font-bold leading-5 tracking-[-0.2px];
+  }
+}
+
+@layer components {
+  .custom-body-1 {
+    @apply text-base leading-[23px];
+  }
+
+  .custom-body-2 {
+    @apply text-[15px] leading-[22px];
+  }
+
+  .custom-body-3 {
+    @apply text-[13px] font-semibold leading-[19px];
+  }
+
+  .btn {
+    @apply h-11 w-40 rounded-lg text-center text-sm font-bold transition-all duration-300;
+  }
+
+  .purple {
+    @apply bg-purple text-neutral-silver hover:bg-purple-light hover:text-neutral-pinky;
+  }
+
+  .blue {
+    @apply bg-blue text-neutral-silver hover:bg-blue-indigo hover:text-neutral-pinky;
+  }
+
+  .midnight {
+    @apply bg-blue-midnight text-neutral-silver hover:bg-neutral-slate hover:text-neutral-pinky;
+  }
+
+  .red {
+    @apply bg-red text-neutral-silver hover:bg-red-light hover:text-neutral-pinky;
+  }
+
+  .btn-secondary {
+    @apply inline-flex h-5 w-24 items-center justify-center gap-4 text-sm font-bold transition-all duration-300 hover:underline;
+  }
+
+  .transparent {
+    @apply text-neutral-slate inline-flex h-5 w-24 items-center justify-center gap-4 text-sm font-bold transition-all duration-300 hover:underline;
+  }
+
+  .dark-blue {
+    @apply bg-blue-midnight text-neutral-silver h-14 w-40 rounded-lg;
+  }
+}
