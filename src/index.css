@@ -51,14 +51,14 @@
   }
 
   .btn-secondary {
-    @apply inline-flex h-5 w-24 items-center justify-center gap-4 text-sm font-bold transition-all duration-300 hover:underline;
+    @apply inline-flex h-5 w-24 items-center justify-center gap-4 rounded-lg text-sm font-bold transition-all duration-300 hover:underline;
   }
 
   .transparent {
-    @apply text-neutral-slate inline-flex h-5 w-24 items-center justify-center gap-4 text-sm font-bold transition-all duration-300 hover:underline;
+    @apply inline-flex h-5 w-24 items-center justify-center gap-4 text-sm font-bold text-neutral-slate transition-all duration-300 hover:underline;
   }
 
   .dark-blue {
-    @apply bg-blue-midnight text-neutral-silver h-14 w-40 rounded-lg;
+    @apply h-14 w-40 rounded-lg bg-blue-midnight text-neutral-silver;
   }
 }

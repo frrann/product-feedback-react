@@ -1,16 +1,24 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import Login from './pages/Login';
 import AppLayout from './ui/AppLayout';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 0,
+    },
+  },
+});
 
 function App() {
   return (
-    <AppLayout>
-      <div className="mt-10 rounded-lg bg-neutral-white md:mt-16 xl:mt-0">
-        <div className="px-6 py-11 md:px-[42px] md:pt-[52px]">
-          <p className="text-lg font-bold text-blue-dark md:text-2xl">
-            AppLayout
-          </p>
-        </div>
-      </div>
-    </AppLayout>
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} panelPosition="bottom" />
+      <AppLayout>
+        <Login />
+      </AppLayout>
+    </QueryClientProvider>
   );
 }
 
