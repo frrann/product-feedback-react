@@ -1,26 +1,33 @@
-import Input from '../../ui/Input';
-import Button from '../../ui/Button';
 import { useState } from 'react';
-// import { useLogin } from './useLogin';
+import { useNavigate } from 'react-router-dom';
+import Button from '../../ui/Button';
+import Input from '../../ui/Input';
+import { useSignUp } from './useSignUp';
 
 function RegisterForm() {
-  const [email, setEmail] = useState('ada.fran92@gmail.com');
-  const [password, setPassword] = useState('12345678');
-  // const { login, isLoading } = useLogin();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
+
+  const navigate = useNavigate();
+  const { signup, isLoading } = useSignUp();
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (!email || !password) return;
+    if (!email || !password || !passwordConfirm) return;
 
-    // login(
-    //   { email, password },
-    //   {
-    //     onSettled: () => {
-    //       setEmail('');
-    //       setPassword('');
-    //     },
-    //   },
-    // );
+    if (password !== passwordConfirm) return;
+
+    signup(
+      { email, password },
+      {
+        onSettled: () => {
+          setEmail('');
+          setPassword('');
+          setPasswordConfirm('');
+        },
+      },
+    );
 
     // Navigate to suggestions page
   }
@@ -37,7 +44,7 @@ function RegisterForm() {
           autoComplete="username"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          // disabled={isLoading}
+          disabled={isLoading}
         />
       </div>
       <div className="flex flex-col gap-[0.5rem] px-0">
@@ -49,7 +56,7 @@ function RegisterForm() {
           id="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          // disabled={isLoading}
+          disabled={isLoading}
         />
       </div>
       <div className="flex flex-col gap-[0.5rem] px-0">
@@ -60,25 +67,21 @@ function RegisterForm() {
           type="password"
           id="passwordConfirm"
           autoComplete="current-password"
-          //   value={password}
-          //   onChange={(e) => setPassword(e.target.value)}
-          // disabled={isLoading}
+          value={passwordConfirm}
+          onChange={(e) => setPasswordConfirm(e.target.value)}
+          disabled={isLoading}
         />
       </div>
       <div className="flex items-center">
-        <Button
-          type="primary"
-          color="purple"
-          size="large"
-          // disabled={isLoading}
-        >
+        <Button type="primary" color="purple" size="large" disabled={isLoading}>
           Sign up
         </Button>
         <Button
           type="secondary"
           color="transparent"
           size="large"
-          // disabled={isLoading}
+          onClick={() => navigate('/login')}
+          disabled={isLoading}
         >
           Sign in
         </Button>

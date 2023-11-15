@@ -1,11 +1,14 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Input from '../../ui/Input';
 import Button from '../../ui/Button';
-import { useState } from 'react';
 import { useLogin } from './useLogin';
 
 function LoginForm() {
   const [email, setEmail] = useState('ada.fran92@gmail.com');
   const [password, setPassword] = useState('12345678');
+
+  const navigate = useNavigate();
   const { login, isLoading } = useLogin();
 
   function handleSubmit(e) {
@@ -21,8 +24,6 @@ function LoginForm() {
         },
       },
     );
-
-    // Navigate to suggestions page
   }
 
   return (
@@ -62,6 +63,7 @@ function LoginForm() {
           color="transparent"
           size="large"
           disabled={isLoading}
+          onClick={() => navigate('/register')}
         >
           Sign up
         </Button>
