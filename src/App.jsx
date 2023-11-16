@@ -1,16 +1,50 @@
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
+import ProtectedRoute from './pages/ProtectedRoute';
+import LoginLayout from './ui/LoginLayout';
+import Login from './pages/Login';
+import Register from './pages/Register';
 import AppLayout from './ui/AppLayout';
+import Suggestions from './pages/Suggestions';
+import PageNotFound from './pages/PageNotFound';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 0,
+    },
+  },
+});
 
 function App() {
   return (
-    <AppLayout>
-      <div className="mt-10 rounded-lg bg-neutral-white md:mt-16 xl:mt-0">
-        <div className="px-6 py-11 md:px-[42px] md:pt-[52px]">
-          <p className="text-lg font-bold text-blue-dark md:text-2xl">
-            AppLayout
-          </p>
-        </div>
-      </div>
-    </AppLayout>
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} panelPosition="bottom" />
+
+      <BrowserRouter>
+        <Routes>
+          {/* protected routes */}
+          <Route
+            element={
+              <ProtectedRoute>
+                <AppLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route path="/" element={<Suggestions />} />
+            <Route path="*" element={<PageNotFound />} />
+          </Route>
+
+          {/* login/register routes */}
+          <Route element={<LoginLayout />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </QueryClientProvider>
   );
 }
 
