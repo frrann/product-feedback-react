@@ -1,92 +1,93 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FormProvider, useForm } from 'react-hook-form';
+
+import FormRow from './FormRow';
+import FormButtons from './FormButtons';
 import Button from '../../ui/Button';
-import Input from '../../ui/Input';
+
 import { useSignUp } from './useSignUp';
 
 function RegisterForm() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
-
+  const methods = useForm();
   const navigate = useNavigate();
   const { signup, isLoading } = useSignUp();
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    if (!email || !password || !passwordConfirm) return;
-
-    if (password !== passwordConfirm) return;
-
+  function onSubmit({ email, password }) {
     signup(
       { email, password },
       {
         onSettled: () => {
-          setEmail('');
-          setPassword('');
-          setPasswordConfirm('');
+          methods.reset('');
         },
       },
     );
-
-    // Navigate to suggestions page
   }
 
   return (
-    <form onSubmit={handleSubmit} className="grid gap-2">
-      <div className="flex flex-col gap-[0.5rem] px-0">
-        <label htmlFor="email" className="text-sm">
-          Email address
-        </label>
-        <Input
-          type="email"
-          id="email"
-          autoComplete="username"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+    <FormProvider {...methods}>
+      <form onSubmit={methods.handleSubmit(onSubmit)} className="grid gap-2">
+        <FormRow
+          label="Email address"
+          name="email"
+          rules={{
+            required: 'This field is required',
+            pattern: {
+              value: /\S+@\S+\.\S+/,
+              message: 'Please provide a valid email address',
+            },
+          }}
           disabled={isLoading}
         />
-      </div>
-      <div className="flex flex-col gap-[0.5rem] px-0">
-        <label htmlFor="password" className="text-sm">
-          Password
-        </label>
-        <Input
+
+        <FormRow
+          label="Password"
+          name="password"
           type="password"
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          rules={{
+            required: 'This field is required',
+            minLength: {
+              value: 8,
+              message: 'Passwords needs a minimum of 8 characters',
+            },
+          }}
           disabled={isLoading}
         />
-      </div>
-      <div className="flex flex-col gap-[0.5rem] px-0">
-        <label htmlFor="password" className="text-sm">
-          Confirm password
-        </label>
-        <Input
+
+        <FormRow
+          label="Confirm password"
+          name="passwordConfirm"
           type="password"
-          id="passwordConfirm"
-          autoComplete="current-password"
-          value={passwordConfirm}
-          onChange={(e) => setPasswordConfirm(e.target.value)}
+          rules={{
+            required: 'This field is required',
+            validate: (value, formValues) =>
+              value === formValues.password || 'Passwords need to match',
+          }}
           disabled={isLoading}
         />
-      </div>
-      <div className="flex items-center">
-        <Button type="primary" color="purple" size="large" disabled={isLoading}>
-          Sign up
-        </Button>
-        <Button
-          type="secondary"
-          color="transparent"
-          size="large"
-          onClick={() => navigate('/login')}
-          disabled={isLoading}
-        >
-          Sign in
-        </Button>
-      </div>
-    </form>
+
+        <FormButtons>
+          <Button
+            type="submit"
+            variant="primary"
+            color="purple"
+            size="large"
+            disabled={isLoading}
+          >
+            Sign up
+          </Button>
+          <Button
+            type="button"
+            variant="secondary"
+            color="transparent"
+            size="large"
+            onClick={() => navigate('/login')}
+            disabled={isLoading}
+          >
+            Sign in
+          </Button>
+        </FormButtons>
+      </form>
+    </FormProvider>
   );
 }
 

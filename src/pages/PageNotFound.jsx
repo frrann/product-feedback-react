@@ -10,7 +10,7 @@ function PageNotFound() {
       <h1 className="text-neutral-grey">
         The page you are looking for could not be found.
       </h1>
-      <Button type="secondary" color="dark-blue">
+      <Button variant="secondary" color="dark-blue">
         <img src={ArrowBack} alt="Arrow back" />
         Go back
       </Button>

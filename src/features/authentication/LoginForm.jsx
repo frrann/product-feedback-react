@@ -1,74 +1,79 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Input from '../../ui/Input';
+import { useForm, FormProvider } from 'react-hook-form';
+
+import FormRow from './FormRow';
+import FormButtons from './FormButtons';
 import Button from '../../ui/Button';
+
 import { useLogin } from './useLogin';
 
 function LoginForm() {
-  const [email, setEmail] = useState('ada.fran92@gmail.com');
-  const [password, setPassword] = useState('12345678');
-
+  const methods = useForm();
   const navigate = useNavigate();
   const { login, isLoading } = useLogin();
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    if (!email || !password) return;
-
+  function onSubmit({ email, password }) {
     login(
       { email, password },
       {
-        onSettled: () => {
-          setEmail('');
-          setPassword('');
-        },
+        onSettled: () => methods.reset(),
       },
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="grid gap-2">
-      <div className="flex flex-col gap-[0.5rem] px-0">
-        <label htmlFor="email" className="text-sm">
-          Email address
-        </label>
-        <Input
-          type="email"
-          id="email"
-          autoComplete="username"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+    <FormProvider {...methods}>
+      <form onSubmit={methods.handleSubmit(onSubmit)} className="grid gap-2">
+        <FormRow
+          label="Email address"
+          name="email"
+          rules={{
+            required: 'This field is required',
+            pattern: {
+              value: /\S+@\S+\.\S+/,
+              message: 'Please provide a valid email address',
+            },
+          }}
           disabled={isLoading}
         />
-      </div>
-      <div className="flex flex-col gap-[0.5rem] px-0">
-        <label htmlFor="password" className="text-sm">
-          Password
-        </label>
-        <Input
+
+        <FormRow
+          label="Password"
+          name="password"
           type="password"
-          id="password"
-          autoComplete="current-password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          rules={{
+            required: 'This field is required',
+            minLength: {
+              value: 8,
+              message: 'Passwords needs a minimum of 8 characters',
+            },
+          }}
           disabled={isLoading}
         />
-      </div>
-      <div className="flex items-center gap-2">
-        <Button type="primary" color="purple" size="large" disabled={isLoading}>
-          Sign in
-        </Button>
-        <Button
-          type="secondary"
-          color="transparent"
-          size="large"
-          disabled={isLoading}
-          onClick={() => navigate('/register')}
-        >
-          Sign up
-        </Button>
-      </div>
-    </form>
+
+        <FormButtons>
+          <Button
+            type="submit"
+            variant="primary"
+            color="purple"
+            size="large"
+            disabled={isLoading}
+          >
+            Sign in
+          </Button>
+          <Button
+            type="button"
+            variant="secondary"
+            color="transparent"
+            size="large"
+            disabled={isLoading}
+            onClick={() => navigate('/register')}
+          >
+            Sign up
+          </Button>
+        </FormButtons>
+      </form>
+    </FormProvider>
   );
 }
 
