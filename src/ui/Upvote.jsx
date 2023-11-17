@@ -7,13 +7,13 @@ function Upvote() {
 
   return (
     <div
-      className="bg-neutral-pinky hover:bg-blue-periwinkle text-blue-dark active:bg-blue active:!upvote-active grid h-14 w-10 cursor-pointer content-center items-center justify-center rounded-lg transition-all duration-300"
+      className="active:!upvote-active flex w-10 cursor-pointer content-center items-center justify-center gap-[10px] rounded-lg bg-neutral-pinky px-6 py-[6px] text-blue-dark transition-all duration-300 hover:bg-blue-periwinkle active:bg-blue md:h-14 md:flex-col"
       onClick={() => setVotes((votes) => votes + 1)}
     >
       <div className="text-blue">
         <MdOutlineKeyboardArrowUp />
       </div>
-      <div className="text-center text-xs font-bold">{votes}</div>
+      <div className="custom-body-3 text-center">{votes}</div>
     </div>
   );
 }

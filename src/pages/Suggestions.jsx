@@ -96,27 +96,6 @@ function Suggestions() {
       {suggestions.map((item) => (
         <Suggestion item={item} />
       ))}
-      {suggestions.map((item) => (
-        <Suggestion item={item} />
-      ))}
-      {suggestions.map((item) => (
-        <Suggestion item={item} />
-      ))}
-      {suggestions.map((item) => (
-        <Suggestion item={item} />
-      ))}
-      {suggestions.map((item) => (
-        <Suggestion item={item} />
-      ))}
-      {suggestions.map((item) => (
-        <Suggestion item={item} />
-      ))}
-      {suggestions.map((item) => (
-        <Suggestion item={item} />
-      ))}
-      {suggestions.map((item) => (
-        <Suggestion item={item} />
-      ))}
     </div>
     // <div className="h-max overflow-hidden rounded-lg bg-neutral-white md:mt-16 xl:mt-0">
     //   <h1>Suggestions</h1>
