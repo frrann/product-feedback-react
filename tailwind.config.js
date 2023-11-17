@@ -35,6 +35,13 @@ export default {
     fontFamily: {
       sans: ['Jost', 'sans-serif'],
     },
+    extend: {
+      backgroundImage: {
+        mobile: "url('/src/assets/mobile/background-header.png')",
+        tablet: "url('/src/assets/tablet/background-header.png')",
+        desktop: "url('/src/assets/desktop/background-header.png')",
+      },
+    },
   },
   plugins: [],
 };
