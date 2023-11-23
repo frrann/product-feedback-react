@@ -7,7 +7,7 @@ import {
 
 function Trigger({ label, icon = null, onClick }) {
   const styles =
-    'flex h-16 w-48 cursor-pointer items-center justify-center gap-1 rounded-lg bg-blue-midnight text-sm text-neutral-pinky transition-all duration-300';
+    'flex h-16 cursor-pointer items-center justify-center gap-1 rounded-lg bg-blue-midnight text-sm text-neutral-pinky transition-all duration-300';
 
   return (
     <div className={styles} onClick={onClick} tabIndex={0}>
@@ -19,14 +19,14 @@ function Trigger({ label, icon = null, onClick }) {
 
 function DropdownMenu({ items, selected, onItemClick, onClose }) {
   const triggerStyles =
-    'bg-white mt-4 w-64 rounded-lg shadow-xl transition-all duration-300';
+    'bg-neutral-white mt-4 w-64 rounded-lg shadow-xl transition-all duration-300 absolute';
 
   const itemStyles =
     'flex cursor-pointer items-center justify-between px-5 py-3 text-base';
 
   return (
     <div className={triggerStyles} role="listbox">
-      {items.map((item) => (
+      {items.map((item, index) => (
         <div
           key={item.id}
           onClick={() => {
@@ -36,7 +36,7 @@ function DropdownMenu({ items, selected, onItemClick, onClose }) {
           className={`${itemStyles} ${
             selected?.id === item.id ? 'text-purple' : 'text-neutral-slate'
           } ${
-            item.id !== items.length - 1 &&
+            index !== items.length - 1 &&
             'border-b-[2px] border-b-neutral-silver'
           }`}
         >

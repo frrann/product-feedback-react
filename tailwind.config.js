@@ -41,6 +41,9 @@ export default {
         tablet: "url('/src/assets/tablet/background-header.png')",
         desktop: "url('/src/assets/desktop/background-header.png')",
       },
+      screens: {
+        lg: '1222px',
+      },
     },
   },
   plugins: [],

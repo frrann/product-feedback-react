@@ -13,7 +13,7 @@ function Upvote() {
       <div className="text-blue">
         <MdOutlineKeyboardArrowUp />
       </div>
-      <div className="custom-body-3 text-center">{votes}</div>
+      <div className="custom-body-3 select-none text-center">{votes}</div>
     </div>
   );
 }

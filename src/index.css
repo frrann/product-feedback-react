@@ -61,4 +61,8 @@
   .dark-blue {
     @apply h-14 w-40 rounded-lg bg-blue-midnight text-neutral-silver;
   }
+
+  .page-container {
+    @apply flex flex-col bg-neutral-silver lg:h-screen lg:flex-row lg:overflow-auto;
+  }
 }

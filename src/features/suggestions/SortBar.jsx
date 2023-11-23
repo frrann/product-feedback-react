@@ -1,29 +1,36 @@
+import IconSuggestions from '../../assets/icon-suggestions.svg';
+import Button from '../../ui/Button';
+import Dropdown from '../../ui/Dropdown';
+
 function SortBar() {
+  const suggestionsLength = 6;
+
   return (
-    <div className="bg-neutral-silver md:px-10 md:pb-3 lg:w-full lg:pl-0">
-      <div className="bg-blue-midnight py-6 pl-6 text-neutral-light md:rounded-lg">
-        <div>
-          {/* <!-- Add number of suggestions here -->  */}
-          <span>Suggestions</span>
-          <select>
-            Sort by:
-            <option>Most upvotes</option>
-            <option>Least upvotes</option>
-            <option>Most comments</option>
-            <option>Least comments</option>
-          </select>
-
-          <button>Add Feedback</button>
-
-          {/* <!-- No feedback --> */}
-          {/* <span>
-            There is no feedback yet. Got a suggestion? Found a bug that needs
-            to be squashed? We love hearing about new ideas to improve our app.
-          </span>
-
-          <span>Add Feedback</span> */}
-          {/* <!-- No feedback end --> */}
+    <div className="bg-neutral-silver md:px-10 md:pb-3 lg:w-full lg:pl-0 lg:pr-0">
+      <div className="flex items-center justify-between bg-blue-midnight py-1 pl-6 pr-4 text-neutral-light md:rounded-lg">
+        {/* <!-- Add number of suggestions here -->  */}
+        <div className="flex items-center gap-4">
+          <img
+            src={IconSuggestions}
+            alt="Suggestions section"
+            className="hidden md:block"
+          />
+          <h3 className="hidden pr-5 md:block">
+            {suggestionsLength} Suggestions
+          </h3>
+          <Dropdown
+            items={[
+              { id: 1, text: 'Most Upvotes' },
+              { id: 2, text: 'Least Upvotes' },
+              { id: 3, text: 'Most Comments' },
+              { id: 4, text: 'Least Comments' },
+            ]}
+          />
         </div>
+
+        <Button variant="primary" color="purple" margin="my-0">
+          + Add Feedback
+        </Button>
       </div>
     </div>
   );

@@ -18,7 +18,7 @@ function Suggestion({ item }) {
           <span className="custom-body-3">{item.comments.length}</span>
         </div>
       </div>
-      <div className="hidden cursor-pointer gap-2 md:flex md:self-center">
+      <div className="hidden cursor-pointer select-none gap-2 md:flex md:self-center">
         <img src={CommentsIcon} alt="Comments" />
         <span className="custom-body-3">{item.comments.length}</span>
       </div>
