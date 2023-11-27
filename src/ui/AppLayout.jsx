@@ -1,13 +1,24 @@
 import { Outlet } from 'react-router-dom';
 
+import Sidebar from './Sidebar';
+import MainContent from './MainContent';
+
 function AppLayout() {
   return (
-    <div className="grid h-screen overflow-auto bg-neutral-silver px-6 pb-12 pt-[34px] md:px-[114px] md:pb-[54px] md:pt-14 xl:px-[450px] xl:pb-[147px] xl:pt-[180px]">
-      <div className="mt-10 h-max overflow-hidden rounded-lg bg-neutral-white md:mt-16 xl:mt-0">
-        <Outlet />
-      </div>
+    <div className="page-container">
+      <Sidebar />
+
+      {/* <MainContent> */}
+      <Outlet />
+      {/* </MainContent> */}
     </div>
   );
 }
 
 export default AppLayout;
+
+// <div className="h-max overflow-hidden rounded-lg bg-neutral-white md:mt-16 xl:mt-0">
+//   <h1>Suggestions</h1>
+
+//   {/* <button onClick={logout}>Logout</button> */}
+// </div>

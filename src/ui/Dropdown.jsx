@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import {
   MdOutlineKeyboardArrowDown,
   MdOutlineKeyboardArrowUp,
@@ -7,7 +8,7 @@ import {
 
 function Trigger({ label, icon = null, onClick }) {
   const styles =
-    'flex h-16 w-48 cursor-pointer items-center justify-center gap-1 rounded-lg bg-blue-midnight text-sm text-neutral-pinky transition-all duration-300';
+    'flex h-16 cursor-pointer items-center justify-center gap-1 rounded-lg bg-blue-midnight text-sm text-neutral-pinky transition-all duration-300';
 
   return (
     <div className={styles} onClick={onClick} tabIndex={0}>
@@ -17,26 +18,37 @@ function Trigger({ label, icon = null, onClick }) {
   );
 }
 
-function DropdownMenu({ items, selected, onItemClick, onClose }) {
+function DropdownMenu({
+  items,
+  selected,
+  onItemClick,
+  onClose,
+  searchParams,
+  setSearchParams,
+}) {
   const triggerStyles =
-    'bg-white mt-4 w-64 rounded-lg shadow-xl transition-all duration-300';
+    'bg-neutral-white mt-4 w-64 rounded-lg shadow-xl transition-all duration-300 absolute';
 
   const itemStyles =
     'flex cursor-pointer items-center justify-between px-5 py-3 text-base';
 
+  function handleClick(item) {
+    searchParams.set('sortBy', item.value);
+    setSearchParams(searchParams);
+    onItemClick(item);
+    onClose();
+  }
+
   return (
     <div className={triggerStyles} role="listbox">
-      {items.map((item) => (
+      {items.map((item, index) => (
         <div
           key={item.id}
-          onClick={() => {
-            onItemClick(item);
-            onClose();
-          }}
+          onClick={() => handleClick(item)}
           className={`${itemStyles} ${
             selected?.id === item.id ? 'text-purple' : 'text-neutral-slate'
           } ${
-            item.id !== items.length - 1 &&
+            index !== items.length - 1 &&
             'border-b-[2px] border-b-neutral-silver'
           }`}
         >
@@ -55,6 +67,10 @@ function DropdownMenu({ items, selected, onItemClick, onClose }) {
 function Dropdown({ items }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const crtSearchParam = searchParams.get('sortBy');
+  const textDefault =
+    items[items.findIndex((item) => item.value === crtSearchParam)]?.text;
 
   const icon = isOpen ? (
     <MdOutlineKeyboardArrowUp />
@@ -65,7 +81,7 @@ function Dropdown({ items }) {
   return (
     <div>
       <Trigger
-        label={`Sort by : ${selected?.text || items[0].text}`}
+        label={`Sort by : ${selected?.text || textDefault || items[0].text}`}
         icon={icon}
         onClick={() => setIsOpen((open) => !open)}
       />
@@ -75,6 +91,8 @@ function Dropdown({ items }) {
           selected={selected}
           onItemClick={setSelected}
           onClose={() => setIsOpen(false)}
+          searchParams={searchParams}
+          setSearchParams={setSearchParams}
         />
       )}
     </div>

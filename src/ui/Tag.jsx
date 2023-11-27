@@ -1,7 +1,16 @@
-function Tag({ children }) {
+function Tag({ children, onClick, active }) {
+  const activeStyles = '!upvote-active text-neutral-white !bg-blue';
+
   return (
-    <div className="bg-neutral-pinky hover:bg-blue-periwinkle active:text-neutral-white text-blue active:bg-blue active:!upvote-active w-10 cursor-pointer rounded-lg p-[7px] transition-all duration-300">
-      <div className="text-center text-xs font-bold">{children}</div>
+    <div
+      className={`${
+        active ? activeStyles : ''
+      } mb-[14px] mr-2 w-fit cursor-pointer rounded-lg  bg-neutral-pinky px-4 py-[6px] text-blue transition-all duration-300 hover:bg-blue-periwinkle`}
+      onClick={onClick}
+    >
+      <div className="select-none text-center text-xs font-bold capitalize">
+        {children}
+      </div>
     </div>
   );
 }

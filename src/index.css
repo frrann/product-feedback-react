@@ -61,4 +61,59 @@
   .dark-blue {
     @apply h-14 w-40 rounded-lg bg-blue-midnight text-neutral-silver;
   }
+
+  .page-container {
+    @apply flex h-screen flex-col bg-neutral-silver lg:h-screen lg:flex-row lg:overflow-auto;
+  }
+
+  .loader {
+    width: 45px;
+    aspect-ratio: 0.75;
+    --c: no-repeat linear-gradient(theme(colors.purple.DEFAULT) 0 0);
+    background:
+      var(--c) 0% 50%,
+      var(--c) 50% 50%,
+      var(--c) 100% 50%;
+    background-size: 20% 50%;
+    animation: loading 1s infinite linear;
+  }
+
+  @keyframes loading {
+    20% {
+      background-position:
+        0% 0%,
+        50% 50%,
+        100% 50%;
+    }
+    40% {
+      background-position:
+        0% 100%,
+        50% 0%,
+        100% 50%;
+    }
+    60% {
+      background-position:
+        0% 50%,
+        50% 100%,
+        100% 0%;
+    }
+    80% {
+      background-position:
+        0% 50%,
+        50% 50%,
+        100% 100%;
+    }
+  }
+
+  @keyframes rotate {
+    to {
+      transform: rotate(1turn);
+    }
+  }
+
+  .loader-mini {
+    width: 2rem;
+    height: 2rem;
+    animation: rotate 1.5s infinite linear;
+  }
 }
