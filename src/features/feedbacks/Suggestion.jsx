@@ -12,7 +12,7 @@ function Suggestion({ item }) {
         <Tag>{item.category}</Tag>
       </div>
       <div className="flex items-center justify-between pt-4 md:order-first md:items-start md:pr-10 md:pt-0">
-        <Upvote />
+        <Upvote upvotes={item.upvotes} />
         <div className="flex cursor-pointer gap-2 md:hidden">
           <img src={CommentsIcon} alt="Comments" />
           <span className="custom-body-3">{item.comments.length}</span>

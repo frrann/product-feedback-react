@@ -2,8 +2,8 @@ import { useState } from 'react';
 
 import { MdOutlineKeyboardArrowUp } from 'react-icons/md';
 
-function Upvote() {
-  const [votes, setVotes] = useState(0);
+function Upvote({ upvotes }) {
+  const [votes, setVotes] = useState(upvotes);
 
   return (
     <div
