@@ -63,7 +63,7 @@
   }
 
   .page-container {
-    @apply flex h-screen flex-col bg-neutral-silver lg:h-screen lg:flex-row lg:overflow-auto;
+    @apply flex h-full flex-col bg-neutral-silver md:h-screen lg:h-screen lg:flex-row lg:overflow-auto;
   }
 
   .loader {

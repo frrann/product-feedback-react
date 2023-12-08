@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import { getFeedbacks } from '../../services/apiFeedback';
 import { useSearchParams } from 'react-router-dom';
+
+import { getFeedbacks } from '../../services/apiFeedbacks';
 
 export function useFeedbacks() {
   const [searchParams] = useSearchParams();
@@ -11,10 +12,14 @@ export function useFeedbacks() {
   // SORT
   const sortBy = searchParams.get('sortBy') || 'most-upvotes';
 
-  const { isLoading, data: feedbacks } = useQuery({
+  const {
+    isLoading,
+    data: feedbacks,
+    error,
+  } = useQuery({
     queryKey: ['feedbacks', filterBy, sortBy],
     queryFn: () => getFeedbacks({ filterBy }),
   });
 
-  return { isLoading, feedbacks };
+  return { isLoading, feedbacks, error };
 }
