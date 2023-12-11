@@ -1,9 +1,11 @@
-import { useSearchParams } from 'react-router-dom';
-import Suggestion from './Suggestion';
-import { useFeedbacks } from './useFeedbacks';
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+
+import SuggestionRow from './SuggestionRow';
 import NoSuggestions from './NoSuggestions';
 import Spinner from '../../ui/Spinner';
+
+import { useFeedbacks } from './useFeedbacks';
 
 function SuggestionsList() {
   const { isLoading, feedbacks: suggestions } = useFeedbacks();
@@ -36,7 +38,7 @@ function SuggestionsList() {
       {sortedSuggestions?.length !== 0 && (
         <div className="grid h-max gap-4 overflow-hidden">
           {sortedSuggestions?.map((item) => (
-            <Suggestion item={item} key={item.id} />
+            <SuggestionRow item={item} key={item.id} />
           ))}
         </div>
       )}

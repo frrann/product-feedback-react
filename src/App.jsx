@@ -9,6 +9,7 @@ import Register from './pages/Register';
 import AppLayout from './ui/AppLayout';
 import Suggestions from './pages/Suggestions';
 import PageNotFound from './pages/PageNotFound';
+import Suggestion from './pages/Suggestion';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -25,6 +26,33 @@ function App() {
 
       <BrowserRouter>
         <Routes>
+          {/* <Route element={<LoginLayout />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+          </Route>
+
+          <Route
+            element={
+              <ProtectedRoute>
+                <AppLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route index element={<Navigate replace to="suggestions" />} />
+            <Route path="/suggestions" element={<Suggestions />} />
+            <Route path="/suggestions/:id" element={<Suggestion />} />
+            <Route path="/suggestions/new" element={<Suggestion />} />
+            <Route path="/suggestions/edit" element={<Suggestion />} />
+            <Route path="/roadmap" element={<Suggestion />} />
+            <Route path="*" element={<PageNotFound />} />
+          </Route> */}
+
+          {/* login/register routes */}
+          <Route element={<LoginLayout />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+          </Route>
+
           {/* protected routes */}
           <Route
             element={
@@ -35,13 +63,8 @@ function App() {
           >
             <Route index element={<Navigate replace to="suggestions" />} />
             <Route path="/suggestions" element={<Suggestions />} />
+            <Route path="/suggestions/:id" element={<Suggestion />} />
             <Route path="*" element={<PageNotFound />} />
-          </Route>
-
-          {/* login/register routes */}
-          <Route element={<LoginLayout />}>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
           </Route>
         </Routes>
       </BrowserRouter>
