@@ -10,6 +10,7 @@ import AppLayout from './ui/AppLayout';
 import Suggestions from './pages/Suggestions';
 import PageNotFound from './pages/PageNotFound';
 import Suggestion from './pages/Suggestion';
+import CreateSuggestion from './pages/CreateSuggestion';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -64,6 +65,7 @@ function App() {
             <Route index element={<Navigate replace to="suggestions" />} />
             <Route path="/suggestions" element={<Suggestions />} />
             <Route path="/suggestions/:id" element={<Suggestion />} />
+            <Route path="/suggestions/new" element={<CreateSuggestion />} />
             <Route path="*" element={<PageNotFound />} />
           </Route>
         </Routes>

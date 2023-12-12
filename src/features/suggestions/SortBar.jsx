@@ -1,11 +1,16 @@
+import { useNavigate } from 'react-router-dom';
+
 import IconSuggestions from '../../assets/icon-suggestions.svg';
+
 import Button from '../../ui/Button';
 import Dropdown from '../../ui/Dropdown';
 import SpinnerMini from '../../ui/SpinnerMini';
+
 import { useSuggestions } from './useSuggestions';
 
 function SortBar() {
   const { isLoading, suggestions } = useSuggestions();
+  const navigate = useNavigate();
 
   return (
     <div className="bg-neutral-silver md:px-10 md:pb-3 lg:w-full lg:pl-0 lg:pr-0">
@@ -30,7 +35,12 @@ function SortBar() {
           />
         </div>
 
-        <Button variant="primary" color="purple" margin="my-0">
+        <Button
+          variant="primary"
+          color="purple"
+          margin="my-0"
+          onClick={() => navigate('/suggestions/new')}
+        >
           + Add Feedback
         </Button>
       </div>
