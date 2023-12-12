@@ -6,17 +6,16 @@ import Spinner from '../../ui/Spinner';
 
 import { useFeedback } from './useFeedback';
 import { useUser } from '../authentication/useUser';
-import { useComment } from './useComment';
+import { useAddComment } from './useAddComment';
 
-function Comment({ comment }) {
+function Comment({ comment, isReply = false, replyToID = null }) {
+  // TODO fix issue of first replies later
   const [showReply, setShowReply] = useState(false);
   const [reply, setReply] = useState('');
 
   const { feedback, isLoading: isFeedbackLoading } = useFeedback();
   const { user, isLoading: isUserLoading } = useUser();
-  const { addComment, isLoading: isCommentLoading } = useComment();
-
-  const isReply = comment.replying_to_id !== null;
+  const { addComment, isLoading: isCommentLoading } = useAddComment();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -27,7 +26,7 @@ function Comment({ comment }) {
       content: reply,
       feedback_request_id: feedback.id,
       user_id: user.id,
-      replying_to_id: comment.id,
+      replying_to_id: replyToID,
       replying_to_username: comment.user.username,
     };
 
@@ -42,11 +41,8 @@ function Comment({ comment }) {
 
   return (
     <div
-      className={` ${
-        isReply
-          ? 'mt-[-2px] border-t-[2px] border-t-neutral-white pb-6 pl-6 md:pb-8 md:pl-8'
-          : 'border-b-[2px] border-b-neutral-silver py-6 last:border-b-0 md:py-8'
-      }`}
+      className={isReply ? 'pb-6 pl-6 md:pb-8 md:pl-8' : 'py-6 md:py-8'}
+      key={comment.id}
     >
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center">
@@ -74,8 +70,8 @@ function Comment({ comment }) {
       <div>
         <p className="custom-body-3 font-normal text-neutral-slate">
           <span className="font-bold text-purple">
-            {isReply ? `@${comment.replying_to_username}` : ''}
-          </span>{' '}
+            {isReply ? `@${comment.replying_to_username} ` : ''}
+          </span>
           {comment.content}
         </p>
       </div>

@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { postComment } from '../../services/apiComments';
 
-export function useComment() {
+export function useAddComment() {
   const queryClient = useQueryClient();
 
   const { mutate: addComment, isLoading } = useMutation({

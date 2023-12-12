@@ -11,7 +11,31 @@ export function useFeedback() {
     error,
   } = useQuery({
     queryKey: ['feedback', id],
-    queryFn: () => getFeedback(id),
+    queryFn: async () => {
+      const data = await getFeedback(id);
+
+      const newComments = data?.comments.filter(
+        (comment) => comment.replying_to_id === null,
+      );
+
+      const replies = data?.comments.filter(
+        (comment) => comment.replying_to_id !== null,
+      );
+
+      newComments.forEach((comment) => {
+        comment.replies = [];
+        replies.forEach((reply) => {
+          if (reply.replying_to_id === comment.id) {
+            comment.replies.push(reply);
+          }
+        });
+      });
+
+      data.totalComments = data.comments.length;
+      data.comments = newComments;
+
+      return data;
+    },
     retry: false,
   });
 
