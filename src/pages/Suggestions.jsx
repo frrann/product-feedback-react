@@ -1,6 +1,6 @@
 import Sidebar from '../ui/Sidebar';
-import SortBar from '../features/feedbacks/SortBar';
-import SuggestionsList from '../features/feedbacks/SuggestionsList';
+import SortBar from '../features/suggestions/SortBar';
+import SuggestionsList from '../features/suggestions/SuggestionsList';
 
 function Suggestions() {
   return (

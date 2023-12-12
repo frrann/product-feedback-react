@@ -8,7 +8,7 @@ export function useAddComment() {
     mutationFn: postComment,
     onSuccess: () => {
       console.log('Success');
-      queryClient.invalidateQueries({ queryKey: ['feedback'] });
+      queryClient.invalidateQueries({ queryKey: ['suggestion'] });
     },
     onError: (error) => console.error(error),
   });

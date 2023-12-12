@@ -5,14 +5,14 @@ import Card from '../../ui/Card';
 import Input from '../../ui/Input';
 import SpinnerLarge from '../../ui/SpinnerLarge';
 
-import { useFeedback } from './useFeedback';
+import { useSuggestion } from './useSuggestion';
 import { useUser } from '../authentication/useUser';
 import { useAddComment } from './useAddComment';
 
 function AddCommentCard() {
   const [comment, setComment] = useState('');
 
-  const { feedback, isLoading: isFeedbackLoading } = useFeedback();
+  const { suggestion, isLoading: isSuggestionLoading } = useSuggestion();
   const { user, isLoading: isUserLoading } = useUser();
   const { addComment, isLoading: isCommentLoading } = useAddComment();
 
@@ -23,7 +23,7 @@ function AddCommentCard() {
 
     const newComment = {
       content: comment,
-      feedback_request_id: feedback.id,
+      suggestion_id: suggestion.id,
       user_id: user.id,
       replying_to_id: null,
       replying_to_username: null,
@@ -33,7 +33,7 @@ function AddCommentCard() {
     setComment('');
   }
 
-  if (isFeedbackLoading || isUserLoading || isCommentLoading)
+  if (isSuggestionLoading || isUserLoading || isCommentLoading)
     return <SpinnerLarge />;
 
   return (

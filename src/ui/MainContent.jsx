@@ -1,4 +1,4 @@
-import SortBar from '../features/feedbacks/SortBar';
+import SortBar from '../features/suggestions/SortBar';
 
 function MainContent({ children }) {
   return (

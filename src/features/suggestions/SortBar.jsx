@@ -2,10 +2,10 @@ import IconSuggestions from '../../assets/icon-suggestions.svg';
 import Button from '../../ui/Button';
 import Dropdown from '../../ui/Dropdown';
 import SpinnerMini from '../../ui/SpinnerMini';
-import { useFeedbacks } from './useFeedbacks';
+import { useSuggestions } from './useSuggestions';
 
 function SortBar() {
-  const { isLoading, feedbacks } = useFeedbacks();
+  const { isLoading, suggestions } = useSuggestions();
 
   return (
     <div className="bg-neutral-silver md:px-10 md:pb-3 lg:w-full lg:pl-0 lg:pr-0">
@@ -17,7 +17,7 @@ function SortBar() {
             className="hidden md:block"
           />
           <div className="hidden items-center gap-2 pr-5 md:flex">
-            {!isLoading ? <h3>{feedbacks?.length}</h3> : <SpinnerMini />}
+            {!isLoading ? <h3>{suggestions?.length}</h3> : <SpinnerMini />}
             <h3>Suggestions</h3>
           </div>
           <Dropdown

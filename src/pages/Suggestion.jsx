@@ -1,4 +1,4 @@
-import SuggestionDetail from '../features/feedbacks/SuggestionDetail';
+import SuggestionDetail from '../features/suggestions/SuggestionDetail';
 
 function Suggestion() {
   return <SuggestionDetail />;

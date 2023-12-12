@@ -1,18 +1,18 @@
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
-import { getFeedback } from '../../services/apiFeedbacks';
+import { getSuggestion } from '../../services/apiSuggestions';
 
-export function useFeedback() {
+export function useSuggestion() {
   const { id } = useParams();
 
   const {
     isLoading,
-    data: feedback,
+    data: suggestion,
     error,
   } = useQuery({
-    queryKey: ['feedback', id],
+    queryKey: ['suggestion', id],
     queryFn: async () => {
-      const data = await getFeedback(id);
+      const data = await getSuggestion(id);
 
       const newComments = data?.comments.filter(
         (comment) => comment.replying_to_id === null,
@@ -39,5 +39,5 @@ export function useFeedback() {
     retry: false,
   });
 
-  return { feedback, isLoading, error };
+  return { suggestion, isLoading, error };
 }

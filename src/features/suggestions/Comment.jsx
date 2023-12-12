@@ -4,7 +4,7 @@ import Button from '../../ui/Button';
 import Input from '../../ui/Input';
 import Spinner from '../../ui/Spinner';
 
-import { useFeedback } from './useFeedback';
+import { useSuggestion } from './useSuggestion';
 import { useUser } from '../authentication/useUser';
 import { useAddComment } from './useAddComment';
 
@@ -13,7 +13,7 @@ function Comment({ comment, isReply = false, replyToID = null }) {
   const [showReply, setShowReply] = useState(false);
   const [reply, setReply] = useState('');
 
-  const { feedback, isLoading: isFeedbackLoading } = useFeedback();
+  const { suggestion, isLoading: isSuggestionLoading } = useSuggestion();
   const { user, isLoading: isUserLoading } = useUser();
   const { addComment, isLoading: isCommentLoading } = useAddComment();
 
@@ -24,7 +24,7 @@ function Comment({ comment, isReply = false, replyToID = null }) {
 
     const newReply = {
       content: reply,
-      feedback_request_id: feedback.id,
+      suggestion_id: suggestion.id,
       user_id: user.id,
       replying_to_id: replyToID,
       replying_to_username: comment.user.username,
@@ -36,7 +36,7 @@ function Comment({ comment, isReply = false, replyToID = null }) {
     setShowReply(false);
   }
 
-  if (isFeedbackLoading || isUserLoading || isCommentLoading)
+  if (isSuggestionLoading || isUserLoading || isCommentLoading)
     return <Spinner />;
 
   return (

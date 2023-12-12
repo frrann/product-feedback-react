@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'react-router-dom';
 
-import { getFeedbacks } from '../../services/apiFeedbacks';
+import { getSuggestions } from '../../services/apiSuggestions';
 
-export function useFeedbacks() {
+export function useSuggestions() {
   const [searchParams] = useSearchParams();
 
   // FILTER
@@ -14,12 +14,12 @@ export function useFeedbacks() {
 
   const {
     isLoading,
-    data: feedbacks,
+    data: suggestions,
     error,
   } = useQuery({
-    queryKey: ['feedbacks', filterBy, sortBy],
-    queryFn: () => getFeedbacks({ filterBy }),
+    queryKey: ['suggestions', filterBy, sortBy],
+    queryFn: () => getSuggestions({ filterBy }),
   });
 
-  return { isLoading, feedbacks, error };
+  return { isLoading, suggestions, error };
 }
