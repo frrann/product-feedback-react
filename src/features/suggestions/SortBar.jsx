@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import IconSuggestions from '../../assets/icon-suggestions.svg';
 
@@ -10,6 +10,9 @@ import { useSuggestions } from './useSuggestions';
 
 function SortBar() {
   const { isLoading, suggestions } = useSuggestions();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const crtSearchParam = searchParams.get('sortBy');
+
   const navigate = useNavigate();
 
   return (
@@ -26,12 +29,19 @@ function SortBar() {
             <h3>Suggestions</h3>
           </div>
           <Dropdown
+            name="sort"
+            title="Sort by : "
             items={[
               { id: 1, value: 'most-upvotes', text: 'Most Upvotes' },
               { id: 2, value: 'least-upvotes', text: 'Least Upvotes' },
               { id: 3, value: 'most-comments', text: 'Most Comments' },
               { id: 4, value: 'least-comments', text: 'Least Comments' },
             ]}
+            crtSearchParam={crtSearchParam}
+            onChange={(item) => {
+              searchParams.set('sortBy', item.value);
+              setSearchParams(searchParams);
+            }}
           />
         </div>
 
