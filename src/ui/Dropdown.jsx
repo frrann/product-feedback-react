@@ -8,9 +8,9 @@ import {
 
 function Trigger({ label, name, icon = null, onClick }) {
   const styles = {
-    sort: 'flex h-16 cursor-pointer items-center justify-center gap-1 rounded-lg bg-blue-midnight text-sm text-neutral-pinky transition-all duration-300',
+    sort: 'cursor-pointer flex h-16 cursor-pointer items-center justify-center gap-1 rounded-lg bg-blue-midnight text-sm text-neutral-pinky transition-all duration-300',
     categories:
-      'flex justify-between items-center text-sm my-2 w-full rounded border-0 bg-neutral-silver px-5 py-3 text-blue-dark transition duration-300 focus:outline-none focus:ring-1 focus:ring-blue',
+      'cursor-pointer flex justify-between items-center text-sm my-2 w-full rounded border-0 bg-neutral-silver px-5 py-3 text-blue-dark transition duration-300 focus:outline-none focus:ring-1 focus:ring-blue',
   };
 
   return (
@@ -25,7 +25,7 @@ function DropdownMenu({ items, name, selected, onItemClick, onClose }) {
   const triggerStyles = {
     sort: 'bg-neutral-white mt-4 w-64 rounded-lg shadow-xl transition-all duration-300 absolute',
     categories:
-      'bg-neutral-white mt-4 w-[492px] rounded-lg shadow-xl transition-all duration-300 absolute top-9',
+      'bg-neutral-white mt-4 w-[492px] rounded-lg shadow-xl transition-all duration-300 absolute top-9 z-50',
   };
 
   const itemStyles =
@@ -67,10 +67,11 @@ function Dropdown({
   items,
   onChange,
   crtSearchParam = null,
+  defaultValue = null,
   ...rest
 }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState(null);
+  const [selected, setSelected] = useState(defaultValue);
 
   const textDefault =
     items[items.findIndex((item) => item.value === crtSearchParam)]?.text;

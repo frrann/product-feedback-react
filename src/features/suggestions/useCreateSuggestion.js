@@ -1,10 +1,16 @@
-import { useMutation } from '@tanstack/react-query';
-import { createSuggestion as createSuggestionApi } from '../../services/apiSuggestions';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { createEditSuggestion } from '../../services/apiSuggestions';
 
 export function useCreateSuggestion() {
+  const queryClient = useQueryClient();
   const { mutate: createSuggestion, isLoading } = useMutation({
-    mutationFn: createSuggestionApi,
-    onSuccess: () => console.log('Created'),
+    mutationFn: createEditSuggestion,
+    onSuccess: () => {
+      console.log('Created');
+      queryClient.invalidateQueries({
+        queryKey: ['suggestions'],
+      });
+    },
     onError: (err) => console.error(err.message),
   });
 

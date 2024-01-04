@@ -38,11 +38,14 @@ export const getSuggestion = async (id) => {
   return suggestion;
 };
 
-export const createSuggestion = async (suggestion) => {
-  const { data, error } = await supabase
-    .from('suggestions')
-    .insert([suggestion])
-    .select();
+export const createEditSuggestion = async (suggestion, id) => {
+  let query = supabase.from('suggestions');
+
+  if (!id) query = query.insert([{ ...suggestion }]);
+
+  if (id) query = query.update({ ...suggestion }).eq('id', id);
+
+  const { data, error } = await query.select().single();
 
   if (error) throw new Error('Suggestion could not be created');
 

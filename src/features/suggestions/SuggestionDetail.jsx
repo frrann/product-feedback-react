@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+
 import Button from '../../ui/Button';
 import SpinnerLarge from '../../ui/SpinnerLarge';
 import SuggestionCard from './SuggestionCard';
@@ -11,6 +13,8 @@ import { useSuggestion } from './useSuggestion';
 
 function SuggestionDetail() {
   const moveBack = useMoveBack();
+  const navigate = useNavigate();
+
   const { suggestion, isLoading: isSuggestionLoading } = useSuggestion();
 
   if (isSuggestionLoading) return <SpinnerLarge />;
@@ -27,7 +31,9 @@ function SuggestionDetail() {
           <img src={ArrowBack} alt="Arrow back" />
           Go Back
         </Button>
-        <Button color="blue">Edit Feedback</Button>
+        <Button color="blue" onClick={() => navigate('edit')}>
+          Edit Feedback
+        </Button>
       </div>
       <SuggestionCard suggestion={suggestion} />
       <CommentsCard suggestion={suggestion} />

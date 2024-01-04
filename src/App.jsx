@@ -11,6 +11,7 @@ import Suggestions from './pages/Suggestions';
 import PageNotFound from './pages/PageNotFound';
 import Suggestion from './pages/Suggestion';
 import CreateSuggestion from './pages/CreateSuggestion';
+import EditSuggestion from './pages/EditSuggestion';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -27,27 +28,6 @@ function App() {
 
       <BrowserRouter>
         <Routes>
-          {/* <Route element={<LoginLayout />}>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-          </Route>
-
-          <Route
-            element={
-              <ProtectedRoute>
-                <AppLayout />
-              </ProtectedRoute>
-            }
-          >
-            <Route index element={<Navigate replace to="suggestions" />} />
-            <Route path="/suggestions" element={<Suggestions />} />
-            <Route path="/suggestions/:id" element={<Suggestion />} />
-            <Route path="/suggestions/new" element={<Suggestion />} />
-            <Route path="/suggestions/edit" element={<Suggestion />} />
-            <Route path="/roadmap" element={<Suggestion />} />
-            <Route path="*" element={<PageNotFound />} />
-          </Route> */}
-
           {/* login/register routes */}
           <Route element={<LoginLayout />}>
             <Route path="/login" element={<Login />} />
@@ -65,6 +45,7 @@ function App() {
             <Route index element={<Navigate replace to="suggestions" />} />
             <Route path="/suggestions" element={<Suggestions />} />
             <Route path="/suggestions/:id" element={<Suggestion />} />
+            <Route path="/suggestions/:id/edit" element={<EditSuggestion />} />
             <Route path="/suggestions/new" element={<CreateSuggestion />} />
             <Route path="*" element={<PageNotFound />} />
           </Route>
