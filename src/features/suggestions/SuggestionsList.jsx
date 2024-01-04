@@ -5,10 +5,10 @@ import SuggestionRow from './SuggestionRow';
 import NoSuggestions from './NoSuggestions';
 import Spinner from '../../ui/Spinner';
 
-import { useFeedbacks } from './useFeedbacks';
+import { useSuggestions } from './useSuggestions';
 
 function SuggestionsList() {
-  const { isLoading, feedbacks: suggestions } = useFeedbacks();
+  const { isLoading, suggestions } = useSuggestions();
 
   const [searchParams] = useSearchParams();
   const [sortedSuggestions, setSortedSuggestions] = useState(suggestions || []);
