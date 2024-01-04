@@ -1,19 +1,24 @@
-import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 import Button from '../../ui/Button';
 import Card from '../../ui/Card';
 import Input from '../../ui/Input';
 import Dropdown from '../../ui/Dropdown';
 import Textarea from '../../ui/Textarea';
+import SpinnerLarge from '../../ui/SpinnerLarge';
 
 import ArrowBack from '../../assets/icon-arrow-back-blue.svg';
 import Plus from '../../assets/icon-new-feedback.svg';
 
 import { useMoveBack } from '../../hooks/useMoveBack';
+import { useCreateSuggestion } from './useCreateSuggestion';
 
 function SuggestionForm() {
   const moveBack = useMoveBack();
+  const { createSuggestion, isLoading } = useCreateSuggestion();
+  const navigate = useNavigate();
 
   const [category, setCategory] = useState({
     value: 'feature',
@@ -35,13 +40,17 @@ function SuggestionForm() {
       upvotes: 0,
       status: 'suggestion',
     };
-    console.log(newSuggestion);
+    createSuggestion(newSuggestion, {
+      onSuccess: () => navigate('/'),
+    });
   }
 
   useEffect(() => {
     register('title', { required: "Can't be empty" });
     register('description', { required: "Can't be empty" });
   }, [register, resetField]);
+
+  if (isLoading) return <SpinnerLarge />;
 
   return (
     <div className="flex h-screen flex-col gap-14 p-6 md:px-28 md:py-14 lg:mx-auto lg:h-fit lg:w-[540px] lg:px-0 lg:py-20">

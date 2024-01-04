@@ -37,3 +37,14 @@ export const getSuggestion = async (id) => {
 
   return suggestion;
 };
+
+export const createSuggestion = async (suggestion) => {
+  const { data, error } = await supabase
+    .from('suggestions')
+    .insert([suggestion])
+    .select();
+
+  if (error) throw new Error('Suggestion could not be created');
+
+  return data;
+};
