@@ -1,8 +1,11 @@
+import { useNavigate } from 'react-router-dom';
 import Button from './Button';
 
 import { GoDotFill } from 'react-icons/go';
 
 function SidebarRoadmap() {
+  const navigate = useNavigate();
+
   return (
     <div className="hidden bg-neutral-white md:grid md:flex-1 md:rounded-lg lg:flex-none">
       <div className="p-6">
@@ -13,6 +16,7 @@ function SidebarRoadmap() {
             color="transparent"
             size="auto"
             margin="my-0"
+            onClick={() => navigate('/roadmap')}
           >
             View
           </Button>
