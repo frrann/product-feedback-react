@@ -108,7 +108,7 @@ function SuggestionForm({ suggestionToEdit = {} }) {
           ...data,
           category: category.value,
           upvotes: 0,
-          status,
+          status: status.value,
         },
         {
           onSuccess: () => {

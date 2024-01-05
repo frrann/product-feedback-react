@@ -25,7 +25,7 @@ function DropdownMenu({ items, name, selected, onItemClick, onClose }) {
   const triggerStyles = {
     sort: 'bg-neutral-white mt-4 w-64 rounded-lg shadow-xl transition-all duration-300 absolute',
     categories:
-      'bg-neutral-white mt-4 w-[492px] rounded-lg shadow-xl transition-all duration-300 absolute top-9 z-50',
+      'bg-neutral-white mt-4 md:w-[492px] w-full rounded-lg shadow-xl transition-all duration-300 absolute top-9 z-50',
   };
 
   const itemStyles =

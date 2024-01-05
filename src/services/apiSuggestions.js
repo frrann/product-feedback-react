@@ -53,12 +53,19 @@ export const createEditSuggestion = async (suggestion, id) => {
 };
 
 export const deleteSuggestion = async (id) => {
-  const { data, error } = await supabase
+  const { error: commentsError } = await supabase
+    .from('comments')
+    .delete()
+    .eq('suggestion_id', id);
+
+  if (commentsError) throw new Error('Comments could not be deleted');
+
+  const { data, error: suggestionError } = await supabase
     .from('suggestions')
     .delete()
     .eq('id', id);
 
-  if (error) throw new Error('Suggestion could not be deleted');
+  if (suggestionError) throw new Error('Suggestion could not be deleted');
 
   return data;
 };
