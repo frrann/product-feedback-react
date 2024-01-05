@@ -11,46 +11,115 @@ import SpinnerLarge from '../../ui/SpinnerLarge';
 
 import ArrowBack from '../../assets/icon-arrow-back-blue.svg';
 import Plus from '../../assets/icon-new-feedback.svg';
+import Pen from '../../assets/icon-edit-feedback.svg';
 
 import { useMoveBack } from '../../hooks/useMoveBack';
 import { useCreateSuggestion } from './useCreateSuggestion';
+import { useEditSuggestion } from './useEditSuggestion';
+import { useDeleteSuggestion } from './useDeleteSuggestion';
 
-function SuggestionForm() {
+const CATEGORIES = [
+  { id: 1, value: 'feature', text: 'Feature' },
+  { id: 2, value: 'ui', text: 'UI' },
+  { id: 3, value: 'ux', text: 'UX' },
+  { id: 4, value: 'enhancement', text: 'Enhancement' },
+  { id: 5, value: 'bug', text: 'Bug' },
+];
+const STATUS_OPTIONS = [
+  { id: 1, value: 'suggestion', text: 'Suggestion' },
+  { id: 2, value: 'planned', text: 'Planned' },
+  { id: 3, value: 'progress', text: 'In-Progress' },
+  { id: 4, value: 'live', text: 'Live' },
+];
+
+function SuggestionForm({ suggestionToEdit = {} }) {
+  const { id: editId } = suggestionToEdit;
+  const isEditSession = Boolean(editId);
+
   const moveBack = useMoveBack();
-  const { createSuggestion, isLoading } = useCreateSuggestion();
   const navigate = useNavigate();
 
-  const [category, setCategory] = useState({
-    value: 'feature',
-    text: 'Feature',
-  });
+  const { createSuggestion, isLoading: isCreating } = useCreateSuggestion();
+  const { editSuggestion, isLoading: isEditing } = useEditSuggestion();
+  const { deleteSuggestion, isLoading: isDeleting } = useDeleteSuggestion();
+
+  const initialCategory = isEditSession
+    ? CATEGORIES.find(
+        (category) => category.value === suggestionToEdit?.category,
+      )
+    : {
+        id: 0,
+        value: 'feature',
+        text: 'Feature',
+      };
+
+  const initialStatus = isEditSession
+    ? STATUS_OPTIONS.find((status) => status.value === suggestionToEdit?.status)
+    : {
+        id: 0,
+        value: 'suggestion',
+        text: 'Suggestion',
+      };
+
+  const [category, setCategory] = useState(initialCategory);
+  const [status, setStatus] = useState(initialStatus);
 
   const {
     register,
     setValue,
-    resetField,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
-
-  function onSubmit(data) {
-    const newSuggestion = {
-      ...data,
-      category: category.value,
-      upvotes: 0,
-      status: 'suggestion',
-    };
-    createSuggestion(newSuggestion, {
-      onSuccess: () => navigate('/'),
-    });
-  }
 
   useEffect(() => {
     register('title', { required: "Can't be empty" });
     register('description', { required: "Can't be empty" });
-  }, [register, resetField]);
+  }, [register]);
 
-  if (isLoading) return <SpinnerLarge />;
+  useEffect(() => {
+    if (isEditSession) {
+      setValue('title', suggestionToEdit?.title);
+      setValue('description', suggestionToEdit?.description);
+    }
+  }, [isEditSession, setValue, suggestionToEdit]);
+
+  function onSubmit(data) {
+    if (isEditSession)
+      editSuggestion(
+        {
+          newSuggestionData: {
+            ...data,
+            category: category.value,
+            status: status.value,
+          },
+          id: editId,
+        },
+        {
+          onSuccess: () => {
+            reset();
+            navigate('/');
+          },
+        },
+      );
+    else
+      createSuggestion(
+        {
+          ...data,
+          category: category.value,
+          upvotes: 0,
+          status: status.value,
+        },
+        {
+          onSuccess: () => {
+            reset();
+            navigate('/');
+          },
+        },
+      );
+  }
+
+  if (isCreating || isEditing || isDeleting) return <SpinnerLarge />;
 
   return (
     <div className="flex h-screen flex-col gap-14 p-6 md:px-28 md:py-14 lg:mx-auto lg:h-fit lg:w-[540px] lg:px-0 lg:py-20">
@@ -68,12 +137,21 @@ function SuggestionForm() {
       <Card className="gap-6">
         <div className="relative">
           <img
-            src={Plus}
-            alt="Add new feedback"
+            src={isEditSession ? Pen : Plus}
+            alt={isEditSession ? 'Edit feedback' : 'Add new feedback'}
             className="absolute bottom-1 w-10 md:bottom-0 md:w-14"
           />
         </div>
-        <h3 className="text-blue-midnight md:text-2xl">Create New Feedback</h3>
+        <h3
+          className={`text-blue-midnight md:text-2xl ${
+            isEditSession ? 'md:mb-12' : 'md:mb-4'
+          }`}
+        >
+          {isEditSession
+            ? `Editing '${suggestionToEdit.title}'`
+            : 'Create New Feedback'}
+        </h3>
+
         <form className="flex flex-col gap-6" onSubmit={handleSubmit(onSubmit)}>
           <div>
             <label
@@ -87,9 +165,11 @@ function SuggestionForm() {
             </p>
             <Input
               id="title"
+              key="title"
               aria-invalid={errors.title?.message !== undefined}
               aria-describedby="titleErr"
               onChange={(e) => setValue('title', e.target.value)}
+              defaultValue={suggestionToEdit?.title}
             />
             {errors.title && (
               <span id="titleErr" className="text-xs text-red">
@@ -109,17 +189,36 @@ function SuggestionForm() {
             </p>
             <Dropdown
               name="categories"
-              items={[
-                { id: 1, value: 'feature', text: 'Feature' },
-                { id: 2, value: 'ui', text: 'UI' },
-                { id: 3, value: 'ux', text: 'UX' },
-                { id: 4, value: 'enhancement', text: 'Enhancement' },
-                { id: 5, value: 'bug', text: 'Bug' },
-              ]}
+              items={CATEGORIES}
               id="category"
               onChange={setCategory}
+              defaultValue={CATEGORIES.find(
+                (category) => category.value === suggestionToEdit?.category,
+              )}
             />
           </div>
+          {isEditSession && (
+            <div>
+              <label
+                htmlFor="status"
+                className="custom-body-3 font-bold text-blue-midnight md:text-sm"
+              >
+                Update Status
+              </label>
+              <p className="custom-body-3 font-normal text-neutral-grey md:text-sm">
+                Change feature state
+              </p>
+              <Dropdown
+                name="categories"
+                items={STATUS_OPTIONS}
+                id="status"
+                onChange={setStatus}
+                defaultValue={STATUS_OPTIONS.find(
+                  (status) => status.value === suggestionToEdit?.status,
+                )}
+              />
+            </div>
+          )}
           <div>
             <label
               htmlFor="description"
@@ -133,9 +232,11 @@ function SuggestionForm() {
             </p>
             <Textarea
               id="description"
+              key="description"
               aria-invalid={errors.description?.message !== undefined}
               aria-describedby="descErr"
               onChange={(e) => setValue('description', e.target.value)}
+              defaultValue={suggestionToEdit?.description}
             />
             {errors.description && (
               <span id="descErr" className="text-xs text-red">
@@ -143,21 +244,39 @@ function SuggestionForm() {
               </span>
             )}
           </div>
-          <div className="flex flex-col pt-2 md:flex-row md:justify-end md:gap-4">
-            <div className="order-1 w-full md:order-2 md:w-36">
-              <Button size="large" type="submit">
-                Add Feedback
-              </Button>
-            </div>
-            <div className="order-2 w-full md:order-1 md:w-[93px]">
-              <Button
-                color="midnight"
-                size="large"
-                type="button"
-                onClick={moveBack}
-              >
-                Cancel
-              </Button>
+          <div className="flex flex-col items-center pt-2 md:flex-row md:justify-between md:gap-4">
+            {isEditSession && (
+              <div className="order-2 w-full md:order-1 md:w-[93px]">
+                <Button
+                  size="large"
+                  type="button"
+                  color="red"
+                  onClick={() =>
+                    deleteSuggestion(suggestionToEdit?.id, {
+                      onSuccess: () => navigate('/'),
+                    })
+                  }
+                >
+                  Delete
+                </Button>
+              </div>
+            )}
+            <div className="order-1 flex w-full flex-col md:order-2 md:flex-row md:justify-end md:gap-4">
+              <div className="order-1 w-full md:order-3 md:w-36">
+                <Button size="large" type="submit">
+                  {isEditSession ? 'Save Changes' : 'Add Feedback'}
+                </Button>
+              </div>
+              <div className="order-2 w-full md:order-2 md:w-[93px]">
+                <Button
+                  color="midnight"
+                  size="large"
+                  type="button"
+                  onClick={moveBack}
+                >
+                  Cancel
+                </Button>
+              </div>
             </div>
           </div>
         </form>

@@ -38,13 +38,34 @@ export const getSuggestion = async (id) => {
   return suggestion;
 };
 
-export const createSuggestion = async (suggestion) => {
-  const { data, error } = await supabase
-    .from('suggestions')
-    .insert([suggestion])
-    .select();
+export const createEditSuggestion = async (suggestion, id) => {
+  let query = supabase.from('suggestions');
+
+  if (!id) query = query.insert([{ ...suggestion }]);
+
+  if (id) query = query.update({ ...suggestion }).eq('id', id);
+
+  const { data, error } = await query.select().single();
 
   if (error) throw new Error('Suggestion could not be created');
+
+  return data;
+};
+
+export const deleteSuggestion = async (id) => {
+  const { error: commentsError } = await supabase
+    .from('comments')
+    .delete()
+    .eq('suggestion_id', id);
+
+  if (commentsError) throw new Error('Comments could not be deleted');
+
+  const { data, error: suggestionError } = await supabase
+    .from('suggestions')
+    .delete()
+    .eq('id', id);
+
+  if (suggestionError) throw new Error('Suggestion could not be deleted');
 
   return data;
 };
