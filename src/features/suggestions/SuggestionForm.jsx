@@ -16,6 +16,7 @@ import Pen from '../../assets/icon-edit-feedback.svg';
 import { useMoveBack } from '../../hooks/useMoveBack';
 import { useCreateSuggestion } from './useCreateSuggestion';
 import { useEditSuggestion } from './useEditSuggestion';
+import { useDeleteSuggestion } from './useDeleteSuggestion';
 
 const CATEGORIES = [
   { id: 1, value: 'feature', text: 'Feature' },
@@ -40,15 +41,28 @@ function SuggestionForm({ suggestionToEdit = {} }) {
 
   const { createSuggestion, isLoading: isCreating } = useCreateSuggestion();
   const { editSuggestion, isLoading: isEditing } = useEditSuggestion();
+  const { deleteSuggestion, isLoading: isDeleting } = useDeleteSuggestion();
 
-  const [category, setCategory] = useState({
-    value: 'feature',
-    text: 'Feature',
-  });
-  const [status, setStatus] = useState({
-    value: 'suggestion',
-    text: 'Suggestion',
-  });
+  const initialCategory = isEditSession
+    ? CATEGORIES.find(
+        (category) => category.value === suggestionToEdit?.category,
+      )
+    : {
+        id: 0,
+        value: 'feature',
+        text: 'Feature',
+      };
+
+  const initialStatus = isEditSession
+    ? STATUS_OPTIONS.find((status) => status.value === suggestionToEdit?.status)
+    : {
+        id: 0,
+        value: 'suggestion',
+        text: 'Suggestion',
+      };
+
+  const [category, setCategory] = useState(initialCategory);
+  const [status, setStatus] = useState(initialStatus);
 
   const {
     register,
@@ -105,7 +119,7 @@ function SuggestionForm({ suggestionToEdit = {} }) {
       );
   }
 
-  if (isCreating || isEditing) return <SpinnerLarge />;
+  if (isCreating || isEditing || isDeleting) return <SpinnerLarge />;
 
   return (
     <div className="flex h-screen flex-col gap-14 p-6 md:px-28 md:py-14 lg:mx-auto lg:h-fit lg:w-[540px] lg:px-0 lg:py-20">
@@ -233,7 +247,16 @@ function SuggestionForm({ suggestionToEdit = {} }) {
           <div className="flex flex-col items-center pt-2 md:flex-row md:justify-between md:gap-4">
             {isEditSession && (
               <div className="order-2 w-full md:order-1 md:w-[93px]">
-                <Button size="large" type="button" color="red">
+                <Button
+                  size="large"
+                  type="button"
+                  color="red"
+                  onClick={() =>
+                    deleteSuggestion(suggestionToEdit?.id, {
+                      onSuccess: () => navigate('/'),
+                    })
+                  }
+                >
                   Delete
                 </Button>
               </div>
