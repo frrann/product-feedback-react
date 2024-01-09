@@ -86,13 +86,15 @@ function RoadmapMobileTable() {
         <div className="flex items-center justify-between">
           <div
             className={`flex flex-1 cursor-pointer justify-center py-5 ${
-              status.planned ? 'border-b-4 border-b-purple' : 'opacity-40'
+              status.planned ? 'border-b-4 border-b-orange' : 'opacity-40'
             }`}
             onClick={() =>
               setStatus({ planned: true, progress: false, live: false })
             }
           >
-            <h4>Planned ({groupedSuggestions['planned'].length})</h4>
+            <h4 className="text-blue-midnight">
+              Planned ({groupedSuggestions['planned'].length})
+            </h4>
           </div>
           <div
             className={`flex flex-1 cursor-pointer justify-center py-5 ${
@@ -102,17 +104,21 @@ function RoadmapMobileTable() {
               setStatus({ planned: false, progress: true, live: false })
             }
           >
-            <h4>In-Progress ({groupedSuggestions['progress'].length})</h4>
+            <h4 className="text-blue-midnight">
+              In-Progress ({groupedSuggestions['progress'].length})
+            </h4>
           </div>
           <div
             className={`flex flex-1 cursor-pointer justify-center py-5 ${
-              status.live ? 'border-b-4 border-b-purple' : 'opacity-40'
+              status.live ? 'border-b-4 border-b-blue-light' : 'opacity-40'
             }`}
             onClick={() =>
               setStatus({ planned: false, progress: false, live: true })
             }
           >
-            <h4>Live ({groupedSuggestions['live'].length})</h4>
+            <h4 className="text-blue-midnight">
+              Live ({groupedSuggestions['live'].length})
+            </h4>
           </div>
         </div>
         <div className="px-6">
@@ -126,7 +132,12 @@ function RoadmapMobileTable() {
         </div>
         <div className="px-6">
           {groupedSuggestions[selectedStatus].map((item) => (
-            <SuggestionRow item={item} key={item.id} roadmap={true} />
+            <SuggestionRow
+              item={item}
+              key={item.id}
+              shownOnRoadmap={true}
+              status={selectedStatus}
+            />
           ))}
         </div>
       </div>

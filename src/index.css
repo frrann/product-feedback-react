@@ -63,7 +63,20 @@
   }
 
   .page-container {
-    @apply flex h-full flex-col bg-neutral-silver md:h-screen lg:h-screen lg:flex-row lg:overflow-auto;
+    @apply flex flex-col bg-neutral-silver lg:flex-row lg:overflow-auto;
+    /* @apply flex h-full flex-col bg-neutral-silver md:h-screen lg:h-screen lg:flex-row lg:overflow-auto; */
+  }
+
+  .border-planned {
+    border-top-color: #f49f85;
+  }
+
+  .border-progress {
+    border-top-color: #ad1fea;
+  }
+
+  .border-live {
+    border-top-color: #62bcfa;
   }
 
   .loader {

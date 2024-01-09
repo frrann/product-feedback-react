@@ -31,50 +31,61 @@ function SuggestionRow({
 }) {
   const navigate = useNavigate();
 
-  const border = `border-t-[${ROADMAP_TEXT[status].color}]`;
+  const border =
+    status === 'planned'
+      ? `border-planned`
+      : status === 'progress'
+      ? 'border-progress'
+      : 'border-live';
 
   return (
     <div
       className={`flex w-full flex-col rounded-lg bg-neutral-white p-6 text-blue-midnight hover:cursor-pointer hover:text-blue md:flex-row md:items-stretch ${
-        shownOnRoadmap && `mb-4 border-t-[6px] md:flex-col ${border}`
+        shownOnRoadmap && `mb-4 border-t-[6px] md:flex-col lg:mb-6 ${border}`
       }`}
-      onClick={() => navigate(`/suggestions/${item.id}`)}
     >
-      <div className="flex flex-col gap-[10px] md:flex-1">
+      <div
+        className="flex flex-col gap-[10px] md:flex-1"
+        onClick={() => navigate(`/suggestions/${item.id}`)}
+      >
         {shownOnRoadmap && (
           <div className="flex items-center gap-4">
             <GoDotFill color={ROADMAP_TEXT[status].color} />
-            <span>{ROADMAP_TEXT[status].heading}</span>
+            <span className="custom-body-3 lg:custom-body-1 font-normal text-neutral-grey">
+              {ROADMAP_TEXT[status].heading}
+            </span>
           </div>
         )}
-        <h4>{item.title}</h4>
-        <p className="custom-body-3 font-normal !text-neutral-grey">
+        <h4 className="md:text-lg">{item.title}</h4>
+        <p className="custom-body-3 md:custom-body-1 font-normal !text-neutral-grey md:mb-3">
           {item.description}
         </p>
         <Tag>{item.category}</Tag>
       </div>
       <div
-        className={`flex items-center justify-between pt-4 md:items-start md:pr-10 md:pt-0 ${
-          !shownOnRoadmap && 'md:order-first'
+        className={`flex items-center justify-between pt-4  ${
+          !shownOnRoadmap && 'md:order-first md:items-start md:pr-10 md:pt-0'
         }`}
       >
-        <Upvote upvotes={item.upvotes} />
+        <Upvote upvotes={item.upvotes} shownOnRoadmap={shownOnRoadmap} />
         <div
           className={`flex cursor-pointer gap-2 ${
             !shownOnRoadmap && 'md:hidden'
-          }`}
+          } ${item.comments.length === 0 && 'opacity-50'}`}
         >
           <img src={CommentsIcon} alt="Comments" />
-          <span className="custom-body-3">{item.comments.length}</span>
+          <span className="custom-body-3 font-bold">
+            {item.comments.length}
+          </span>
         </div>
       </div>
       <div
         className={`hidden cursor-pointer select-none gap-2 ${
-          !shownOnRoadmap && 'md:flex md:self-center'
-        }`}
+          !shownOnRoadmap && 'items-center md:flex md:self-center'
+        } ${item.comments.length === 0 && 'opacity-50'}`}
       >
         <img src={CommentsIcon} alt="Comments" />
-        <span className="custom-body-3">{item.comments.length}</span>
+        <span className="custom-body-1 font-bold">{item.comments.length}</span>
       </div>
     </div>
   );
