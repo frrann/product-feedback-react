@@ -69,3 +69,26 @@ export const deleteSuggestion = async (id) => {
 
   return data;
 };
+
+export const getGroupedSuggestions = async () => {
+  const { data, error } = await supabase
+    .from('grouped_suggestions')
+    .select('*');
+
+  if (error) throw new Error('Suggestions could not be loaded');
+
+  return data;
+};
+
+export const updateUpvotes = async (upvotes, id) => {
+  const { data, error } = await supabase
+    .from('suggestions')
+    .update({ upvotes: upvotes })
+    .eq('id', id)
+    .select()
+    .single();
+
+  if (error) throw new Error('Suggestion could not be updated');
+
+  return data;
+};

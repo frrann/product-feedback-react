@@ -23,7 +23,7 @@ function Trigger({ label, name, icon = null, onClick }) {
 
 function DropdownMenu({ items, name, selected, onItemClick, onClose }) {
   const triggerStyles = {
-    sort: 'bg-neutral-white mt-4 w-64 rounded-lg shadow-xl transition-all duration-300 absolute',
+    sort: 'bg-neutral-white mt-4 w-64 rounded-lg shadow-xl transition-all duration-300 absolute z-50',
     categories:
       'bg-neutral-white mt-4 md:w-[492px] w-full rounded-lg shadow-xl transition-all duration-300 absolute top-9 z-50',
   };

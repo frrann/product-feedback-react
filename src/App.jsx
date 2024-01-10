@@ -12,6 +12,7 @@ import PageNotFound from './pages/PageNotFound';
 import Suggestion from './pages/Suggestion';
 import CreateSuggestion from './pages/CreateSuggestion';
 import EditSuggestion from './pages/EditSuggestion';
+import Roadmap from './pages/Roadmap';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -47,6 +48,7 @@ function App() {
             <Route path="/suggestions/:id" element={<Suggestion />} />
             <Route path="/suggestions/:id/edit" element={<EditSuggestion />} />
             <Route path="/suggestions/new" element={<CreateSuggestion />} />
+            <Route path="/roadmap" element={<Roadmap />} />
             <Route path="*" element={<PageNotFound />} />
           </Route>
         </Routes>

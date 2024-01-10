@@ -7,9 +7,9 @@ import CommentsIcon from '../../assets/icon-comments.svg';
 function SuggestionCard({ suggestion }) {
   return (
     <Card className="md:flex-row md:items-stretch">
-      <div className="flex flex-col gap-[10px] md:flex-1">
-        <h4 className="text-blue-midnight">{suggestion.title}</h4>
-        <p className="custom-body-3 font-normal !text-neutral-grey">
+      <div className="flex flex-col gap-[10px] md:flex-1 md:gap-1">
+        <h4 className="text-blue-midnight md:text-lg">{suggestion.title}</h4>
+        <p className="custom-body-3 md:custom-body-1 font-normal !text-neutral-grey md:mb-3">
           {suggestion.description}
         </p>
         <Tag>{suggestion.category}</Tag>
@@ -21,9 +21,11 @@ function SuggestionCard({ suggestion }) {
           <span className="custom-body-3">{suggestion.comments.length}</span>
         </div>
       </div>
-      <div className="hidden cursor-pointer select-none gap-2 md:flex md:self-center">
+      <div className="hidden cursor-pointer select-none items-center gap-2 md:flex md:self-center">
         <img src={CommentsIcon} alt="Comments" />
-        <span className="custom-body-3">{suggestion.comments.length}</span>
+        <span className="custom-body-3 md:custom-body-1">
+          {suggestion.comments.length}
+        </span>
       </div>
     </Card>
   );
