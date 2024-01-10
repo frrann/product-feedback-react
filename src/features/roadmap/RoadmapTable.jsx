@@ -76,7 +76,7 @@ function RoadmapTable() {
       </div>
       <div className="flex flex-col gap-6">
         <div className="flex justify-between gap-[10px] lg:gap-8">
-          <div className="flex flex-1 cursor-pointer flex-col justify-start pt-8 lg:pt-12">
+          <div className="flex flex-1 cursor-pointer flex-col justify-start pt-8 md:cursor-default lg:pt-12">
             <h4 className="text-blue-midnight lg:text-lg">
               Planned ({groupedSuggestions['planned'].length})
             </h4>
@@ -94,7 +94,7 @@ function RoadmapTable() {
               ))}
             </div>
           </div>
-          <div className="flex flex-1 cursor-pointer flex-col justify-start pt-8 lg:pt-12">
+          <div className="flex flex-1 cursor-pointer flex-col justify-start pt-8 md:cursor-default lg:pt-12">
             <h4 className="text-blue-midnight lg:text-lg">
               In-Progress ({groupedSuggestions['progress'].length})
             </h4>
@@ -112,7 +112,7 @@ function RoadmapTable() {
               ))}
             </div>
           </div>
-          <div className="flex flex-1 cursor-pointer flex-col justify-start pt-8 lg:pt-12">
+          <div className="flex flex-1 cursor-pointer flex-col justify-start pt-8 md:cursor-default lg:pt-12">
             <h4 className="text-blue-midnight lg:text-lg">
               Live ({groupedSuggestions['live'].length})
             </h4>

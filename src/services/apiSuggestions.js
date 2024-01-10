@@ -79,3 +79,16 @@ export const getGroupedSuggestions = async () => {
 
   return data;
 };
+
+export const updateUpvotes = async (upvotes, id) => {
+  const { data, error } = await supabase
+    .from('suggestions')
+    .update({ upvotes: upvotes })
+    .eq('id', id)
+    .select()
+    .single();
+
+  if (error) throw new Error('Suggestion could not be updated');
+
+  return data;
+};

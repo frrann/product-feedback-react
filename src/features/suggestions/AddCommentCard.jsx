@@ -48,7 +48,7 @@ function AddCommentCard() {
         />
         <div className="flex items-center justify-between pt-4">
           <p
-            className={`custom-body-2 ${
+            className={`custom-body-3 md:custom-body-2 font-normal ${
               comment.length >= 250 ? 'text-red' : 'text-neutral-grey'
             }`}
           >

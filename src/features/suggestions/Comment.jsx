@@ -53,7 +53,7 @@ function Comment({ comment, isReply = false, replyToID = null }) {
           />
           <div>
             <h4 className="text-blue-midnight">{comment.user.name}</h4>
-            <p className="custom-body-3 font-normal text-neutral-grey">
+            <p className="custom-body-3 font-normal text-neutral-grey md:text-sm">
               @{comment.user.username}
             </p>
           </div>
@@ -68,7 +68,7 @@ function Comment({ comment, isReply = false, replyToID = null }) {
         </div>
       </div>
       <div>
-        <p className="custom-body-3 font-normal text-neutral-slate">
+        <p className="custom-body-3 md:custom-body-2 font-normal text-neutral-slate md:ml-[72px]">
           <span className="font-bold text-purple">
             {isReply ? `@${comment.replying_to_username} ` : ''}
           </span>
@@ -77,7 +77,7 @@ function Comment({ comment, isReply = false, replyToID = null }) {
       </div>
       {showReply && (
         <form
-          className="flex items-start justify-between gap-4 pt-4"
+          className="flex items-start justify-between gap-4 pt-4 md:ml-[72px]"
           onSubmit={handleSubmit}
         >
           <Input

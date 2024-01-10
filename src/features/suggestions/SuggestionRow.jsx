@@ -56,8 +56,14 @@ function SuggestionRow({
             </span>
           </div>
         )}
-        <h4 className="md:text-lg">{item.title}</h4>
-        <p className="custom-body-3 md:custom-body-1 font-normal !text-neutral-grey md:mb-3">
+        <h4 className={`${shownOnRoadmap ? 'lg:text-lg' : 'md:text-lg'}`}>
+          {item.title}
+        </h4>
+        <p
+          className={`custom-body-3 font-normal !text-neutral-grey md:mb-3 ${
+            !shownOnRoadmap && 'md:custom-body-1'
+          }`}
+        >
           {item.description}
         </p>
         <Tag>{item.category}</Tag>
@@ -67,7 +73,11 @@ function SuggestionRow({
           !shownOnRoadmap && 'md:order-first md:items-start md:pr-10 md:pt-0'
         }`}
       >
-        <Upvote upvotes={item.upvotes} shownOnRoadmap={shownOnRoadmap} />
+        <Upvote
+          item={item}
+          upvotes={item.upvotes}
+          shownOnRoadmap={shownOnRoadmap}
+        />
         <div
           className={`flex cursor-pointer gap-2 ${
             !shownOnRoadmap && 'md:hidden'
