@@ -16,7 +16,7 @@ function SidebarCategories() {
   }
 
   return (
-    <div className="hidden bg-neutral-white md:flex md:flex-1 md:flex-col md:rounded-lg lg:flex-none">
+    <div className="bg-neutral-white md:flex md:flex-1 md:flex-col md:rounded-lg lg:flex-none">
       <div className="flex flex-wrap px-6 pb-[10px] pt-6">
         {categories.map((category) => (
           <Tag

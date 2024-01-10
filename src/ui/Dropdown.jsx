@@ -6,7 +6,7 @@ import {
   MdDone,
 } from 'react-icons/md';
 
-function Trigger({ label, name, icon = null, onClick }) {
+function Trigger({ defaultLabel, label, name, icon = null, onClick }) {
   const styles = {
     sort: 'cursor-pointer flex h-16 cursor-pointer items-center justify-center gap-1 rounded-lg bg-blue-midnight text-sm text-neutral-pinky transition-all duration-300',
     categories:
@@ -15,7 +15,8 @@ function Trigger({ label, name, icon = null, onClick }) {
 
   return (
     <div className={styles[name]} onClick={onClick} tabIndex={0}>
-      <span>{label}</span>
+      {defaultLabel.length !== 0 && <span>{defaultLabel}</span>}
+      <span className={name === 'sort' ? 'font-bold' : null}>{label}</span>
       {icon && <span>{icon}</span>}
     </div>
   );
@@ -85,9 +86,8 @@ function Dropdown({
   return (
     <div {...rest} className="relative">
       <Trigger
-        label={`${title && title}${
-          selected?.text || textDefault || items[0].text
-        }`}
+        defaultLabel={title}
+        label={`${selected?.text || textDefault || items[0].text}`}
         icon={icon}
         onClick={() => setIsOpen((open) => !open)}
         name={name}
