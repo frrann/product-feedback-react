@@ -7,24 +7,8 @@ import SpinnerLarge from '../../ui/SpinnerLarge';
 import ArrowBack from '../../assets/icon-arrow-back.svg';
 
 import { useMoveBack } from '../../hooks/useMoveBack';
-import { useSuggestions } from '../suggestions/useSuggestions';
-
-const ROADMAP_TEXT = {
-  planned: {
-    heading: 'Planned',
-    description: 'Ideas prioritized for research',
-  },
-  progress: {
-    heading: 'In-Progress',
-    description: 'Currently being developed',
-  },
-  live: {
-    heading: 'Live',
-    description: 'Released features',
-  },
-};
-
-const STATUS_OPTIONS = ['planned', 'progress', 'live', 'suggestion'];
+import { useGroupedSuggestions } from '../suggestions/useGroupedSuggestions';
+import { ROADMAP_TEXT } from '../../constants';
 
 function RoadmapMobileTable() {
   const moveBack = useMoveBack();
@@ -40,28 +24,14 @@ function RoadmapMobileTable() {
     (key) => status[key] === true,
   );
 
-  const { isLoading, suggestions } = useSuggestions();
-  const groupedSuggestions = suggestions?.reduce(
-    (acc, suggestion) => {
-      const { status } = suggestion;
-
-      if (!acc[status]) {
-        acc[status] = [];
-      }
-
-      acc[status].push(suggestion);
-
-      return acc;
-    },
-    Object.fromEntries(STATUS_OPTIONS.map((status) => [status, []])),
-  );
+  const { groupedSuggestions, isLoading } = useGroupedSuggestions();
 
   if (isLoading) return <SpinnerLarge />;
 
   return (
     <div className="flex flex-col lg:mx-auto lg:h-fit lg:w-[730px] lg:py-20">
       <div className="flex items-center justify-between bg-blue-midnight p-6 md:p-8 ">
-        <div className="">
+        <div>
           <Button
             variant="secondary"
             color="transparent"
@@ -93,7 +63,12 @@ function RoadmapMobileTable() {
             }
           >
             <h4 className="text-blue-midnight">
-              Planned ({groupedSuggestions['planned'].length})
+              Planned (
+              {
+                groupedSuggestions.find((item) => item.status === 'planned')
+                  .count_of_status
+              }
+              )
             </h4>
           </div>
           <div
@@ -105,7 +80,12 @@ function RoadmapMobileTable() {
             }
           >
             <h4 className="text-blue-midnight">
-              In-Progress ({groupedSuggestions['progress'].length})
+              In-Progress (
+              {
+                groupedSuggestions.find((item) => item.status === 'progress')
+                  .count_of_status
+              }
+              )
             </h4>
           </div>
           <div
@@ -117,28 +97,39 @@ function RoadmapMobileTable() {
             }
           >
             <h4 className="text-blue-midnight">
-              Live ({groupedSuggestions['live'].length})
+              Live (
+              {
+                groupedSuggestions.find((item) => item.status === 'live')
+                  .count_of_status
+              }
+              )
             </h4>
           </div>
         </div>
         <div className="px-6">
           <h3 className="text-blue-midnight">
             {ROADMAP_TEXT[selectedStatus].heading} (
-            {groupedSuggestions[selectedStatus].length})
+            {
+              groupedSuggestions.find((item) => item.status === selectedStatus)
+                .count_of_status
+            }
+            )
           </h3>
           <p className="custom-body-3 font-normal text-neutral-grey">
             {ROADMAP_TEXT[selectedStatus].description}
           </p>
         </div>
         <div className="px-6">
-          {groupedSuggestions[selectedStatus].map((item) => (
-            <SuggestionRow
-              item={item}
-              key={item.id}
-              shownOnRoadmap={true}
-              status={selectedStatus}
-            />
-          ))}
+          {groupedSuggestions
+            .find((item) => item.status === selectedStatus)
+            ?.data.map((item) => (
+              <SuggestionRow
+                item={item}
+                key={item.id}
+                shownOnRoadmap={true}
+                status={selectedStatus}
+              />
+            ))}
         </div>
       </div>
     </div>
@@ -146,3 +137,19 @@ function RoadmapMobileTable() {
 }
 
 export default RoadmapMobileTable;
+
+// ### Displaying Grouped Data on UI
+// const groupedSuggestions = suggestions?.reduce(
+//   (acc, suggestion) => {
+//     const { status } = suggestion;
+
+//     if (!acc[status]) {
+//       acc[status] = [];
+//     }
+
+//     acc[status].push(suggestion);
+
+//     return acc;
+//   },
+//   Object.fromEntries(STATUS_OPTIONS.map((status) => [status, []])),
+// );

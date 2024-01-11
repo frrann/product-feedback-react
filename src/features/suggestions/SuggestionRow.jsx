@@ -38,6 +38,10 @@ function SuggestionRow({
       ? 'border-progress'
       : 'border-live';
 
+  const commentsLength = !shownOnRoadmap
+    ? item.comments.length
+    : item.comment_count || 0;
+
   return (
     <div
       className={`flex w-full flex-col rounded-lg bg-neutral-white p-6 text-blue-midnight hover:cursor-pointer hover:text-blue md:flex-row md:items-stretch ${
@@ -81,21 +85,19 @@ function SuggestionRow({
         <div
           className={`flex cursor-pointer gap-2 ${
             !shownOnRoadmap && 'md:hidden'
-          } ${item.comments.length === 0 && 'opacity-50'}`}
+          } ${commentsLength === 0 && 'opacity-50'}`}
         >
           <img src={CommentsIcon} alt="Comments" />
-          <span className="custom-body-3 font-bold">
-            {item.comments.length}
-          </span>
+          <span className="custom-body-3 font-bold">{commentsLength}</span>
         </div>
       </div>
       <div
         className={`hidden cursor-pointer select-none gap-2 ${
           !shownOnRoadmap && 'items-center md:flex md:self-center'
-        } ${item.comments.length === 0 && 'opacity-50'}`}
+        } ${commentsLength === 0 && 'opacity-50'}`}
       >
         <img src={CommentsIcon} alt="Comments" />
-        <span className="custom-body-1 font-bold">{item.comments.length}</span>
+        <span className="custom-body-1 font-bold">{commentsLength}</span>
       </div>
     </div>
   );

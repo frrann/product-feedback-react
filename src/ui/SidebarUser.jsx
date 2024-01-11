@@ -26,12 +26,17 @@ function SidebarUser() {
           </p>
         </div>
       </div>
-      <MdLogout
-        color="#64748b"
-        size={20}
-        onClick={logout}
-        className="cursor-pointer"
-      />
+      <div className="group relative">
+        <MdLogout
+          color="#64748b"
+          size={20}
+          onClick={logout}
+          className="cursor-pointer"
+        />
+        <span className="absolute left-[-18px] top-4 scale-0 rounded p-2 text-xs text-neutral-grey group-hover:scale-100">
+          Logout
+        </span>
+      </div>
     </div>
   );
 }

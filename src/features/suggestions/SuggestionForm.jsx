@@ -17,20 +17,7 @@ import { useMoveBack } from '../../hooks/useMoveBack';
 import { useCreateSuggestion } from './useCreateSuggestion';
 import { useEditSuggestion } from './useEditSuggestion';
 import { useDeleteSuggestion } from './useDeleteSuggestion';
-
-const CATEGORIES = [
-  { id: 1, value: 'feature', text: 'Feature' },
-  { id: 2, value: 'ui', text: 'UI' },
-  { id: 3, value: 'ux', text: 'UX' },
-  { id: 4, value: 'enhancement', text: 'Enhancement' },
-  { id: 5, value: 'bug', text: 'Bug' },
-];
-const STATUS_OPTIONS = [
-  { id: 1, value: 'suggestion', text: 'Suggestion' },
-  { id: 2, value: 'planned', text: 'Planned' },
-  { id: 3, value: 'progress', text: 'In-Progress' },
-  { id: 4, value: 'live', text: 'Live' },
-];
+import { CATEGORIES, STATUS_OPTIONS } from '../../constants';
 
 function SuggestionForm({ suggestionToEdit = {} }) {
   const { id: editId } = suggestionToEdit;
