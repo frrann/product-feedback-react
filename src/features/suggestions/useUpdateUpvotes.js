@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
 
 import { updateUpvotes as updateUpvotesApi } from '../../services/apiSuggestions';
 
@@ -11,7 +12,7 @@ export function useUpdateUpvotes() {
         queryKey: ['suggestions'],
       });
     },
-    onError: (err) => console.error(err),
+    onError: (err) => toast.error(err.message),
   });
 
   return { updateUpvotes, isLoading };

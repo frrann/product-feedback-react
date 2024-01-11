@@ -15,14 +15,14 @@ function SidebarUser() {
     <div className="flex items-center justify-between rounded-lg bg-neutral-white p-6 md:hidden lg:flex">
       <div className="flex items-center">
         <img
-          src={userProfile.image}
+          src={userProfile?.image}
           alt="profile"
           className="mr-4 w-10 rounded-full"
         />
         <div>
-          <h4 className="text-blue-midnight">{userProfile.name}</h4>
+          <h4 className="text-blue-midnight">{userProfile?.name}</h4>
           <p className="custom-body-3 font-normal text-neutral-grey md:text-sm">
-            @{userProfile.username}
+            @{userProfile?.username}
           </p>
         </div>
       </div>
