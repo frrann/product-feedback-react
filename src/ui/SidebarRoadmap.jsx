@@ -13,7 +13,7 @@ function SidebarRoadmap() {
   if (isLoading) return <Spinner />;
 
   return (
-    <div className="hidden bg-neutral-white md:grid md:flex-1 md:rounded-lg lg:flex-none">
+    <div className="bg-neutral-white md:grid md:flex-1 md:rounded-lg lg:flex-none">
       <div className="p-6">
         <div className="flex justify-between pb-6">
           <h3 className="text-blue-midnight">Roadmap</h3>
