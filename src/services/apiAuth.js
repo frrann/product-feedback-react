@@ -11,7 +11,7 @@ export const login = async ({ email, password }) => {
   return data;
 };
 
-export const signup = async ({ email, password }) => {
+export const signup = async ({ email, password, profile }) => {
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
@@ -19,8 +19,14 @@ export const signup = async ({ email, password }) => {
 
   if (error) throw new Error(error.message);
 
-  console.log(data);
-  return data;
+  const { data: newProfile, error: newProfileError } = await supabase
+    .from('profiles')
+    .insert([{ id: data.user.id, ...profile }])
+    .select();
+
+  if (newProfileError) throw new Error(error.message);
+
+  return { data, newProfile };
 };
 
 export const logout = async () => {
