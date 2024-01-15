@@ -8,8 +8,7 @@ import { useSuggestion } from './useSuggestion';
 import { useUser } from '../authentication/useUser';
 import { useAddComment } from './useAddComment';
 
-function Comment({ comment, isReply = false, replyToID = null }) {
-  // TODO fix issue of first replies later
+function Comment({ comment }) {
   const [showReply, setShowReply] = useState(false);
   const [reply, setReply] = useState('');
 
@@ -26,8 +25,8 @@ function Comment({ comment, isReply = false, replyToID = null }) {
       content: reply,
       suggestion_id: suggestion.id,
       user_id: user.id,
-      replying_to_id: replyToID,
-      replying_to_username: comment.user.username,
+      thread_id: comment.thread_id || comment.id,
+      replied_username: comment.user.username,
     };
 
     addComment(newReply);
@@ -41,7 +40,9 @@ function Comment({ comment, isReply = false, replyToID = null }) {
 
   return (
     <div
-      className={isReply ? 'pb-6 pl-6 md:pb-8 md:pl-8' : 'py-6 md:py-8'}
+      className={
+        comment.thread_id ? 'pb-6 pl-6 md:pb-8 md:pl-8' : 'py-6 md:py-8'
+      }
       key={comment.id}
     >
       <div className="mb-4 flex items-center justify-between">
@@ -70,7 +71,7 @@ function Comment({ comment, isReply = false, replyToID = null }) {
       <div>
         <p className="custom-body-3 md:custom-body-2 font-normal text-neutral-slate md:ml-[72px]">
           <span className="font-bold text-purple">
-            {isReply ? `@${comment.replying_to_username} ` : ''}
+            {comment.thread_id ? `@${comment.replied_username} ` : ''}
           </span>
           {comment.content}
         </p>

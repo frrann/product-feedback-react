@@ -64,7 +64,7 @@ function SuggestionRow({
           {item.title}
         </h4>
         <p
-          className={`custom-body-3 font-normal !text-neutral-grey md:mb-3 ${
+          className={`custom-body-3 lg:custom-body-1 font-normal !text-neutral-grey md:mb-3 ${
             !shownOnRoadmap && 'md:custom-body-1'
           }`}
         >

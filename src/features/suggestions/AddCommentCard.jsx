@@ -25,8 +25,8 @@ function AddCommentCard() {
       content: comment,
       suggestion_id: suggestion.id,
       user_id: user.id,
-      replying_to_id: null,
-      replying_to_username: null,
+      thread_id: null,
+      replied_username: null,
     };
 
     addComment(newComment);

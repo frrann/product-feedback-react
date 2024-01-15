@@ -1,5 +1,5 @@
 import Card from '../../ui/Card';
-import CommentsRow from './CommentsRow';
+import CommentThread from './CommentThread';
 
 function CommentsCard({ suggestion }) {
   return (
@@ -8,7 +8,7 @@ function CommentsCard({ suggestion }) {
         {suggestion.totalComments} Comments
       </h3>
       {suggestion.comments.map((comment) => (
-        <CommentsRow comment={comment} key={comment.id} />
+        <CommentThread comment={comment} key={comment.id} />
       ))}
     </Card>
   );
