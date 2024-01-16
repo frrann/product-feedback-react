@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
+import { useForm, useWatch } from 'react-hook-form';
 
 import Button from '../../ui/Button';
 import Card from '../../ui/Card';
@@ -6,31 +7,41 @@ import Input from '../../ui/Input';
 import SpinnerLarge from '../../ui/SpinnerLarge';
 
 import { useSuggestion } from './useSuggestion';
-import { useUser } from '../authentication/useUser';
 import { useAddComment } from './useAddComment';
+import { useUser } from '../authentication/useUser';
 
 function AddCommentCard() {
-  const [comment, setComment] = useState('');
+  const { register, setValue, control, reset, handleSubmit } = useForm();
+
+  const comment = useWatch({
+    control,
+    name: 'comment',
+    defaultValue: '',
+  });
 
   const { suggestion, isLoading: isSuggestionLoading } = useSuggestion();
-  const { user, isLoading: isUserLoading } = useUser();
   const { addComment, isLoading: isCommentLoading } = useAddComment();
+  const { user, isLoading: isUserLoading } = useUser();
 
-  function handleSubmit(e) {
-    e.preventDefault();
+  useEffect(() => {
+    register('comment', {
+      required: "Can't be empty",
+    });
+  }, [register]);
 
-    if (!comment.length) return;
-
-    const newComment = {
-      content: comment,
-      suggestion_id: suggestion.id,
-      user_id: user.id,
-      thread_id: null,
-      replied_username: null,
-    };
-
-    addComment(newComment);
-    setComment('');
+  function onSubmit({ comment }) {
+    addComment(
+      {
+        content: comment,
+        suggestion_id: suggestion.id,
+        user_id: user.id,
+        thread_id: null,
+        replied_username: null,
+      },
+      {
+        onSuccess: () => reset(),
+      },
+    );
   }
 
   if (isSuggestionLoading || isUserLoading || isCommentLoading)
@@ -39,13 +50,13 @@ function AddCommentCard() {
   return (
     <Card>
       <h3 className="text-blue-midnight">Add Comment</h3>
-      <form className="pt-4" onSubmit={handleSubmit}>
+      <form className="pt-4" onSubmit={handleSubmit(onSubmit)}>
         <Input
           placeholder="Type your comment here"
           id="comment"
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
+          onChange={(e) => setValue('comment', e.target.value)}
         />
+
         <div className="flex items-center justify-between pt-4">
           <p
             className={`custom-body-3 md:custom-body-2 font-normal ${
@@ -54,7 +65,13 @@ function AddCommentCard() {
           >
             {comment.length >= 250 ? 0 : 250 - comment.length} Characters left
           </p>
-          <Button disabled={comment.length >= 250}>Post Comment</Button>
+
+          <Button
+            type="submit"
+            disabled={comment.length < 1 || comment.length >= 250}
+          >
+            Post Comment
+          </Button>
         </div>
       </form>
     </Card>

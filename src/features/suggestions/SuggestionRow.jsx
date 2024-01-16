@@ -26,8 +26,8 @@ const ROADMAP_TEXT = {
 
 function SuggestionRow({
   item,
-  shownOnRoadmap = false,
   status = 'suggestion',
+  shownOnRoadmap = false,
 }) {
   const navigate = useNavigate();
 

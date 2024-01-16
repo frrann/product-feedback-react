@@ -18,9 +18,9 @@ function RoadmapColumn({ suggestions, status }) {
           ?.data.map((item) => (
             <SuggestionRow
               item={item}
-              key={item.id}
-              shownOnRoadmap={true}
               status={status}
+              shownOnRoadmap={true}
+              key={item.id}
             />
           ))}
       </div>

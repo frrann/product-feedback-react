@@ -1,19 +1,13 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
-import Button from '../../ui/Button';
+import RoadmapHeader from './RoadmapHeader';
 import SuggestionRow from '../suggestions/SuggestionRow';
 import SpinnerLarge from '../../ui/SpinnerLarge';
-import ArrowBack from '../../assets/icon-arrow-back.svg';
 
-import { useMoveBack } from '../../hooks/useMoveBack';
 import { useGroupedSuggestions } from '../suggestions/useGroupedSuggestions';
 import { ROADMAP_TEXT } from '../../constants';
 
 function RoadmapMobileTable() {
-  const moveBack = useMoveBack();
-  const navigate = useNavigate();
-
   const [status, setStatus] = useState({
     planned: true,
     progress: false,
@@ -30,28 +24,7 @@ function RoadmapMobileTable() {
 
   return (
     <div className="flex flex-col lg:mx-auto lg:h-fit lg:w-[730px] lg:py-20">
-      <div className="flex items-center justify-between bg-blue-midnight p-6 md:p-8 ">
-        <div>
-          <Button
-            variant="secondary"
-            color="transparent"
-            size="auto"
-            onClick={moveBack}
-          >
-            <img src={ArrowBack} alt="Arrow back" />
-            <span className="text-neutral-white">Go Back</span>
-          </Button>
-          <h3 className="text-neutral-white">Roadmap</h3>
-        </div>
-        <Button
-          variant="primary"
-          color="purple"
-          margin="my-0"
-          onClick={() => navigate('/suggestions/new')}
-        >
-          + Add Feedback
-        </Button>
-      </div>
+      <RoadmapHeader />
       <div className="flex flex-col gap-6">
         <div className="flex items-center justify-between">
           <div

@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+
 import { getCurrentUserData } from '../../services/apiAuth';
 
 export function useUserProfile() {

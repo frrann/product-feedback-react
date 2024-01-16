@@ -17,6 +17,7 @@ import { useMoveBack } from '../../hooks/useMoveBack';
 import { useCreateSuggestion } from './useCreateSuggestion';
 import { useEditSuggestion } from './useEditSuggestion';
 import { useDeleteSuggestion } from './useDeleteSuggestion';
+import { useUser } from '../authentication/useUser';
 import { CATEGORIES, STATUS_OPTIONS } from '../../constants';
 
 function SuggestionForm({ suggestionToEdit = {} }) {
@@ -29,6 +30,7 @@ function SuggestionForm({ suggestionToEdit = {} }) {
   const { createSuggestion, isLoading: isCreating } = useCreateSuggestion();
   const { editSuggestion, isLoading: isEditing } = useEditSuggestion();
   const { deleteSuggestion, isLoading: isDeleting } = useDeleteSuggestion();
+  const { user, isLoading: isUserLoading } = useUser();
 
   const initialCategory = isEditSession
     ? CATEGORIES.find(
@@ -93,6 +95,7 @@ function SuggestionForm({ suggestionToEdit = {} }) {
       createSuggestion(
         {
           ...data,
+          user_id: user.id,
           category: category.value,
           upvotes: 0,
           status: status.value,
@@ -106,7 +109,8 @@ function SuggestionForm({ suggestionToEdit = {} }) {
       );
   }
 
-  if (isCreating || isEditing || isDeleting) return <SpinnerLarge />;
+  if (isUserLoading || isCreating || isEditing || isDeleting)
+    return <SpinnerLarge />;
 
   return (
     <div className="flex h-screen flex-col gap-14 p-6 md:px-28 md:py-14 lg:mx-auto lg:h-fit lg:w-[540px] lg:px-0 lg:py-20">
