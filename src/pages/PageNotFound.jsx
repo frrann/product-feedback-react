@@ -2,6 +2,7 @@ import Button from '../ui/Button';
 
 import IllustrationEmpty from '../assets/illustration-empty.svg';
 import ArrowBack from '../assets/icon-arrow-back.svg';
+
 import { useMoveBack } from '../hooks/useMoveBack';
 
 function PageNotFound() {

@@ -8,8 +8,6 @@ function Button({
 }) {
   const base =
     'focus-visible:outline-none focus-visible:ring focus-visible:ring-blue-indigo focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-40';
-  // 'my-2 focus-visible:outline-none focus-visible:ring focus-visible:ring-blue-indigo focus-visible:ring-offset-2 disabled:cursor-not-allowed';
-  // 'my-5 focus-visible:outline-none focus-visible:ring focus-visible:ring-blue-indigo focus-visible:ring-offset-2';
 
   const width = {
     small: 'w-25',

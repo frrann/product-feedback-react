@@ -5,6 +5,7 @@ import { createEditSuggestion } from '../../services/apiSuggestions';
 
 export function useCreateSuggestion() {
   const queryClient = useQueryClient();
+
   const { mutate: createSuggestion, isLoading } = useMutation({
     mutationFn: createEditSuggestion,
     onSuccess: () => {

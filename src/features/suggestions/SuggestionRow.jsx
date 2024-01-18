@@ -1,28 +1,12 @@
 import { useNavigate } from 'react-router-dom';
+import { GoDotFill } from 'react-icons/go';
 
 import Tag from '../../ui/Tag';
 import Upvote from '../../ui/Upvote';
 
-import { GoDotFill } from 'react-icons/go';
 import CommentsIcon from '../../assets/icon-comments.svg';
 
-const ROADMAP_TEXT = {
-  planned: {
-    heading: 'Planned',
-    description: 'Ideas prioritized for research',
-    color: '#F49F85',
-  },
-  progress: {
-    heading: 'In-Progress',
-    description: 'Currently being developed',
-    color: '#AD1FEA',
-  },
-  live: {
-    heading: 'Live',
-    description: 'Released features',
-    color: '#62BCFA',
-  },
-};
+import { STATUS_ROADMAP } from '../../constants';
 
 function SuggestionRow({
   item,
@@ -54,9 +38,9 @@ function SuggestionRow({
       >
         {shownOnRoadmap && (
           <div className="flex items-center gap-4">
-            <GoDotFill color={ROADMAP_TEXT[status].color} />
+            <GoDotFill color={STATUS_ROADMAP[status].color} />
             <span className="custom-body-3 lg:custom-body-1 font-normal text-neutral-grey">
-              {ROADMAP_TEXT[status].heading}
+              {STATUS_ROADMAP[status].heading}
             </span>
           </div>
         )}

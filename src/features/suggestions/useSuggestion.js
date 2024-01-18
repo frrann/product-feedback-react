@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
+
 import { getSuggestion } from '../../services/apiSuggestions';
 
 export function useSuggestion() {

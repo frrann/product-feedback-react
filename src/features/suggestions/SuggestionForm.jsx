@@ -18,7 +18,7 @@ import { useCreateSuggestion } from './useCreateSuggestion';
 import { useEditSuggestion } from './useEditSuggestion';
 import { useDeleteSuggestion } from './useDeleteSuggestion';
 import { useUser } from '../authentication/useUser';
-import { CATEGORIES, STATUS_OPTIONS } from '../../constants';
+import { CATEGORIES, SUGGESTION_STATUSES } from '../../constants';
 
 function SuggestionForm({ suggestionToEdit = {} }) {
   const { id: editId } = suggestionToEdit;
@@ -43,7 +43,9 @@ function SuggestionForm({ suggestionToEdit = {} }) {
       };
 
   const initialStatus = isEditSession
-    ? STATUS_OPTIONS.find((status) => status.value === suggestionToEdit?.status)
+    ? SUGGESTION_STATUSES.find(
+        (status) => status.value === suggestionToEdit?.status,
+      )
     : {
         id: 0,
         value: 'suggestion',
@@ -201,10 +203,10 @@ function SuggestionForm({ suggestionToEdit = {} }) {
               </p>
               <Dropdown
                 name="categories"
-                items={STATUS_OPTIONS}
+                items={SUGGESTION_STATUSES}
                 id="status"
                 onChange={setStatus}
-                defaultValue={STATUS_OPTIONS.find(
+                defaultValue={SUGGESTION_STATUSES.find(
                   (status) => status.value === suggestionToEdit?.status,
                 )}
               />

@@ -5,7 +5,8 @@ import SuggestionRow from '../suggestions/SuggestionRow';
 import SpinnerLarge from '../../ui/SpinnerLarge';
 
 import { useGroupedSuggestions } from '../suggestions/useGroupedSuggestions';
-import { ROADMAP_TEXT } from '../../constants';
+
+import { STATUS_ROADMAP } from '../../constants';
 
 function RoadmapMobileTable() {
   const [status, setStatus] = useState({
@@ -81,7 +82,7 @@ function RoadmapMobileTable() {
         </div>
         <div className="px-6">
           <h3 className="text-blue-midnight">
-            {ROADMAP_TEXT[selectedStatus].heading} (
+            {STATUS_ROADMAP[selectedStatus].heading} (
             {
               groupedSuggestions.find((item) => item.status === selectedStatus)
                 .count_of_status
@@ -89,7 +90,7 @@ function RoadmapMobileTable() {
             )
           </h3>
           <p className="custom-body-3 font-normal text-neutral-grey">
-            {ROADMAP_TEXT[selectedStatus].description}
+            {STATUS_ROADMAP[selectedStatus].description}
           </p>
         </div>
         <div className="px-6">
@@ -124,5 +125,5 @@ export default RoadmapMobileTable;
 
 //     return acc;
 //   },
-//   Object.fromEntries(STATUS_OPTIONS.map((status) => [status, []])),
+//   Object.fromEntries(SUGGESTION_STATUSES.map((status) => [status, []])),
 // );

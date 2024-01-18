@@ -5,6 +5,7 @@ import { updateUpvotes as updateUpvotesApi } from '../../services/apiSuggestions
 
 export function useUpdateUpvotes() {
   const queryClient = useQueryClient();
+
   const { mutate: updateUpvotes, isLoading } = useMutation({
     mutationFn: ({ upvotes, id }) => updateUpvotesApi(upvotes, id),
     onSuccess: () => {

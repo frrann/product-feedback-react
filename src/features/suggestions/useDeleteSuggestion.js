@@ -5,6 +5,7 @@ import { deleteSuggestion as deleteSuggestionApi } from '../../services/apiSugge
 
 export function useDeleteSuggestion() {
   const queryClient = useQueryClient();
+
   const { mutate: deleteSuggestion, isLoading } = useMutation({
     mutationFn: deleteSuggestionApi,
     onSuccess: () => {
