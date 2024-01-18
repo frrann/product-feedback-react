@@ -4,6 +4,7 @@ import Button from './Button';
 import Spinner from './Spinner';
 
 import { GoDotFill } from 'react-icons/go';
+
 import { useGroupedSuggestions } from '../features/suggestions/useGroupedSuggestions';
 
 function SidebarRoadmap() {
