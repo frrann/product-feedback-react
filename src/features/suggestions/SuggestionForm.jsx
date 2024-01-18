@@ -17,20 +17,8 @@ import { useMoveBack } from '../../hooks/useMoveBack';
 import { useCreateSuggestion } from './useCreateSuggestion';
 import { useEditSuggestion } from './useEditSuggestion';
 import { useDeleteSuggestion } from './useDeleteSuggestion';
-
-const CATEGORIES = [
-  { id: 1, value: 'feature', text: 'Feature' },
-  { id: 2, value: 'ui', text: 'UI' },
-  { id: 3, value: 'ux', text: 'UX' },
-  { id: 4, value: 'enhancement', text: 'Enhancement' },
-  { id: 5, value: 'bug', text: 'Bug' },
-];
-const STATUS_OPTIONS = [
-  { id: 1, value: 'suggestion', text: 'Suggestion' },
-  { id: 2, value: 'planned', text: 'Planned' },
-  { id: 3, value: 'progress', text: 'In-Progress' },
-  { id: 4, value: 'live', text: 'Live' },
-];
+import { useUser } from '../authentication/useUser';
+import { CATEGORIES, SUGGESTION_STATUSES } from '../../constants';
 
 function SuggestionForm({ suggestionToEdit = {} }) {
   const { id: editId } = suggestionToEdit;
@@ -42,6 +30,7 @@ function SuggestionForm({ suggestionToEdit = {} }) {
   const { createSuggestion, isLoading: isCreating } = useCreateSuggestion();
   const { editSuggestion, isLoading: isEditing } = useEditSuggestion();
   const { deleteSuggestion, isLoading: isDeleting } = useDeleteSuggestion();
+  const { user, isLoading: isUserLoading } = useUser();
 
   const initialCategory = isEditSession
     ? CATEGORIES.find(
@@ -54,7 +43,9 @@ function SuggestionForm({ suggestionToEdit = {} }) {
       };
 
   const initialStatus = isEditSession
-    ? STATUS_OPTIONS.find((status) => status.value === suggestionToEdit?.status)
+    ? SUGGESTION_STATUSES.find(
+        (status) => status.value === suggestionToEdit?.status,
+      )
     : {
         id: 0,
         value: 'suggestion',
@@ -106,6 +97,7 @@ function SuggestionForm({ suggestionToEdit = {} }) {
       createSuggestion(
         {
           ...data,
+          user_id: user.id,
           category: category.value,
           upvotes: 0,
           status: status.value,
@@ -119,7 +111,8 @@ function SuggestionForm({ suggestionToEdit = {} }) {
       );
   }
 
-  if (isCreating || isEditing || isDeleting) return <SpinnerLarge />;
+  if (isUserLoading || isCreating || isEditing || isDeleting)
+    return <SpinnerLarge />;
 
   return (
     <div className="flex h-screen flex-col gap-14 p-6 md:px-28 md:py-14 lg:mx-auto lg:h-fit lg:w-[540px] lg:px-0 lg:py-20">
@@ -210,10 +203,10 @@ function SuggestionForm({ suggestionToEdit = {} }) {
               </p>
               <Dropdown
                 name="categories"
-                items={STATUS_OPTIONS}
+                items={SUGGESTION_STATUSES}
                 id="status"
                 onChange={setStatus}
-                defaultValue={STATUS_OPTIONS.find(
+                defaultValue={SUGGESTION_STATUSES.find(
                   (status) => status.value === suggestionToEdit?.status,
                 )}
               />

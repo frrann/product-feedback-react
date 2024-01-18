@@ -72,7 +72,8 @@ export const deleteSuggestion = async (id) => {
 
 export const getGroupedSuggestions = async () => {
   const { data, error } = await supabase
-    .from('grouped_suggestions')
+    .from('grouped_status_view')
+    // .from('grouped_suggestions')
     .select('*');
 
   if (error) throw new Error('Suggestions could not be loaded');

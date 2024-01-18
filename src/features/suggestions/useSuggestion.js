@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
+
 import { getSuggestion } from '../../services/apiSuggestions';
 
 export function useSuggestion() {
@@ -15,17 +16,17 @@ export function useSuggestion() {
       const data = await getSuggestion(id);
 
       const newComments = data?.comments.filter(
-        (comment) => comment.replying_to_id === null,
+        (comment) => comment.thread_id === null,
       );
 
       const replies = data?.comments.filter(
-        (comment) => comment.replying_to_id !== null,
+        (comment) => comment.thread_id !== null,
       );
 
       newComments.forEach((comment) => {
         comment.replies = [];
         replies.forEach((reply) => {
-          if (reply.replying_to_id === comment.id) {
+          if (reply.thread_id === comment.id) {
             comment.replies.push(reply);
           }
         });
@@ -37,6 +38,9 @@ export function useSuggestion() {
       return data;
     },
     retry: false,
+    meta: {
+      errorMessage: 'Failed to fetch suggestion',
+    },
   });
 
   return { suggestion, isLoading, error };

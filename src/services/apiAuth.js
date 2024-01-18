@@ -8,11 +8,10 @@ export const login = async ({ email, password }) => {
 
   if (error) throw new Error(error.message);
 
-  console.log(data);
   return data;
 };
 
-export const signup = async ({ email, password }) => {
+export const signup = async ({ email, password, profile }) => {
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
@@ -20,8 +19,14 @@ export const signup = async ({ email, password }) => {
 
   if (error) throw new Error(error.message);
 
-  console.log(data);
-  return data;
+  const { data: newProfile, error: newProfileError } = await supabase
+    .from('profiles')
+    .insert([{ id: data.user.id, ...profile }])
+    .select();
+
+  if (newProfileError) throw new Error(error.message);
+
+  return { data, newProfile };
 };
 
 export const logout = async () => {
@@ -41,4 +46,26 @@ export async function getCurrentUser() {
 
   if (error) throw new Error(error.message);
   return user;
+}
+
+export async function getCurrentUserData() {
+  const { data: session } = await supabase.auth.getSession();
+  if (!session.session) return null;
+
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser();
+
+  if (error) throw new Error(error.message);
+
+  const { data: userData, error: userDataError } = await supabase
+    .from('profiles')
+    .select('*')
+    .eq('id', user.id)
+    .single();
+
+  if (userDataError) throw new Error(userDataError.message);
+
+  return userData;
 }

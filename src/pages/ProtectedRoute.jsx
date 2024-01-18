@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useUser } from '../features/authentication/useUser';
 import { useNavigate } from 'react-router-dom';
+
 import SpinnerLarge from '../ui/SpinnerLarge';
 
 function ProtectedRoute({ children }) {

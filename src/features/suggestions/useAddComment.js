@@ -1,4 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
+
 import { postComment } from '../../services/apiComments';
 
 export function useAddComment() {
@@ -7,10 +9,9 @@ export function useAddComment() {
   const { mutate: addComment, isLoading } = useMutation({
     mutationFn: postComment,
     onSuccess: () => {
-      console.log('Success');
       queryClient.invalidateQueries({ queryKey: ['suggestion'] });
     },
-    onError: (error) => console.error(error),
+    onError: (err) => toast.error(err.message),
   });
 
   return { addComment, isLoading };

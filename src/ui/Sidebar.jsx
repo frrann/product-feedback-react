@@ -1,6 +1,7 @@
 import Logo from './Logo';
 import SidebarCategories from './SidebarCategories';
 import SidebarRoadmap from './SidebarRoadmap';
+import SidebarUser from './SidebarUser';
 
 function Sidebar({ isMobile, isOpen, setIsOpen }) {
   return (
@@ -10,12 +11,14 @@ function Sidebar({ isMobile, isOpen, setIsOpen }) {
         <>
           <SidebarCategories />
           <SidebarRoadmap />
+          <SidebarUser />
         </>
       )}
       {isOpen && (
         <div className="absolute right-0 z-10 h-screen max-w-[270px] bg-neutral-white">
           <SidebarCategories />
           <SidebarRoadmap />
+          <SidebarUser />
         </div>
       )}
     </aside>

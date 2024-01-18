@@ -1,5 +1,6 @@
 import SpinnerLarge from '../ui/SpinnerLarge';
 import SuggestionForm from '../features/suggestions/SuggestionForm';
+
 import { useSuggestion } from '../features/suggestions/useSuggestion';
 
 function EditSuggestion() {

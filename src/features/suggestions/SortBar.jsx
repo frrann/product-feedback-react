@@ -1,10 +1,10 @@
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-import IconSuggestions from '../../assets/icon-suggestions.svg';
-
 import Button from '../../ui/Button';
 import Dropdown from '../../ui/Dropdown';
 import SpinnerMini from '../../ui/SpinnerMini';
+
+import IconSuggestions from '../../assets/icon-suggestions.svg';
 
 import { useSuggestions } from './useSuggestions';
 
@@ -12,7 +12,6 @@ function SortBar() {
   const { isLoading, suggestions } = useSuggestions();
   const [searchParams, setSearchParams] = useSearchParams();
   const crtSearchParam = searchParams.get('sortBy');
-
   const navigate = useNavigate();
 
   return (
@@ -44,7 +43,6 @@ function SortBar() {
             }}
           />
         </div>
-
         <Button
           variant="primary"
           color="purple"

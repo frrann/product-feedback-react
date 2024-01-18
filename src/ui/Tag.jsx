@@ -8,7 +8,11 @@ function Tag({ children, onClick, active }) {
       } mb-[14px] mr-2 w-fit cursor-pointer rounded-lg bg-neutral-pinky px-4 py-[6px] text-blue transition-all duration-300 hover:bg-blue-periwinkle `}
       onClick={onClick}
     >
-      <div className="select-none text-center text-xs font-bold capitalize">
+      <div
+        className={`select-none text-center text-xs font-bold ${
+          children === 'ui' || children === 'ux' ? 'uppercase' : 'capitalize'
+        }`}
+      >
         {children}
       </div>
     </div>

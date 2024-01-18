@@ -1,33 +1,17 @@
 import { useNavigate } from 'react-router-dom';
+import { GoDotFill } from 'react-icons/go';
 
 import Tag from '../../ui/Tag';
 import Upvote from '../../ui/Upvote';
 
-import { GoDotFill } from 'react-icons/go';
 import CommentsIcon from '../../assets/icon-comments.svg';
 
-const ROADMAP_TEXT = {
-  planned: {
-    heading: 'Planned',
-    description: 'Ideas prioritized for research',
-    color: '#F49F85',
-  },
-  progress: {
-    heading: 'In-Progress',
-    description: 'Currently being developed',
-    color: '#AD1FEA',
-  },
-  live: {
-    heading: 'Live',
-    description: 'Released features',
-    color: '#62BCFA',
-  },
-};
+import { STATUS_ROADMAP } from '../../constants';
 
 function SuggestionRow({
   item,
-  shownOnRoadmap = false,
   status = 'suggestion',
+  shownOnRoadmap = false,
 }) {
   const navigate = useNavigate();
 
@@ -37,6 +21,10 @@ function SuggestionRow({
       : status === 'progress'
       ? 'border-progress'
       : 'border-live';
+
+  const commentsLength = !shownOnRoadmap
+    ? item.comments.length
+    : item.comment_count || 0;
 
   return (
     <div
@@ -50,9 +38,9 @@ function SuggestionRow({
       >
         {shownOnRoadmap && (
           <div className="flex items-center gap-4">
-            <GoDotFill color={ROADMAP_TEXT[status].color} />
+            <GoDotFill color={STATUS_ROADMAP[status].color} />
             <span className="custom-body-3 lg:custom-body-1 font-normal text-neutral-grey">
-              {ROADMAP_TEXT[status].heading}
+              {STATUS_ROADMAP[status].heading}
             </span>
           </div>
         )}
@@ -60,7 +48,7 @@ function SuggestionRow({
           {item.title}
         </h4>
         <p
-          className={`custom-body-3 font-normal !text-neutral-grey md:mb-3 ${
+          className={`custom-body-3 lg:custom-body-1 font-normal !text-neutral-grey md:mb-3 ${
             !shownOnRoadmap && 'md:custom-body-1'
           }`}
         >
@@ -81,21 +69,19 @@ function SuggestionRow({
         <div
           className={`flex cursor-pointer gap-2 ${
             !shownOnRoadmap && 'md:hidden'
-          } ${item.comments.length === 0 && 'opacity-50'}`}
+          } ${commentsLength === 0 && 'opacity-50'}`}
         >
           <img src={CommentsIcon} alt="Comments" />
-          <span className="custom-body-3 font-bold">
-            {item.comments.length}
-          </span>
+          <span className="custom-body-3 font-bold">{commentsLength}</span>
         </div>
       </div>
       <div
         className={`hidden cursor-pointer select-none gap-2 ${
           !shownOnRoadmap && 'items-center md:flex md:self-center'
-        } ${item.comments.length === 0 && 'opacity-50'}`}
+        } ${commentsLength === 0 && 'opacity-50'}`}
       >
         <img src={CommentsIcon} alt="Comments" />
-        <span className="custom-body-1 font-bold">{item.comments.length}</span>
+        <span className="custom-body-1 font-bold">{commentsLength}</span>
       </div>
     </div>
   );
