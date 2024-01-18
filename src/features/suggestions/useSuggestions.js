@@ -19,6 +19,9 @@ export function useSuggestions() {
   } = useQuery({
     queryKey: ['suggestions', filterBy, sortBy],
     queryFn: () => getSuggestions({ filterBy }),
+    meta: {
+      errorMessage: 'Failed to fetch suggestions',
+    },
   });
 
   return { isLoading, suggestions, error };

@@ -6,6 +6,9 @@ export function useGroupedSuggestions() {
   const { data: groupedSuggestions, isLoading } = useQuery({
     queryKey: ['suggestions', 'grouped'],
     queryFn: getGroupedSuggestions,
+    meta: {
+      errorMessage: 'Failed to fetch suggestions',
+    },
   });
 
   return { groupedSuggestions, isLoading };

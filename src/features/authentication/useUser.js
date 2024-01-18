@@ -6,6 +6,9 @@ export function useUser() {
   const { data: user, isLoading } = useQuery({
     queryKey: ['user'],
     queryFn: getCurrentUser,
+    meta: {
+      errorMessage: 'Failed to fetch user data',
+    },
   });
 
   return { user, isLoading, isAuthenticated: user?.role === 'authenticated' };

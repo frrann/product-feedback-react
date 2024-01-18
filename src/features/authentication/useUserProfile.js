@@ -6,6 +6,9 @@ export function useUserProfile() {
   const { data: userProfile, isLoading } = useQuery({
     queryKey: ['user', 'profile'],
     queryFn: getCurrentUserData,
+    meta: {
+      errorMessage: "Failed to fetch user's profile",
+    },
   });
 
   return { userProfile, isLoading };

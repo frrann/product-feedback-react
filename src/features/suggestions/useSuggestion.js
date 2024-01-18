@@ -38,6 +38,9 @@ export function useSuggestion() {
       return data;
     },
     retry: false,
+    meta: {
+      errorMessage: 'Failed to fetch suggestion',
+    },
   });
 
   return { suggestion, isLoading, error };
