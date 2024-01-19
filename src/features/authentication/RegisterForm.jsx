@@ -36,6 +36,7 @@ function RegisterForm() {
       },
       {
         onSettled: () => {
+          navigate('/login');
           methods.reset('');
         },
       },
