@@ -40,8 +40,8 @@ Users should be able to:
 
 ### Links
 
-- [Solution URL]()
-- [Live Site URL]()
+- [Solution URL](https://www.frontendmentor.io/solutions/product-feedback-app-using-react-and-supabase-aRpld_vsJw)
+- [Live Site URL](https://product-feedback-frrann.netlify.app/)
 
 ## My process
 
