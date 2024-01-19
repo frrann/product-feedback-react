@@ -9,7 +9,7 @@ export function useSignUp() {
       signupApi({ email, password, profile }),
     onSuccess: () => {
       toast.success(
-        'Account successfully created! Please check your email inbox for a verification link.',
+        'Account successfully created!',
       );
     },
     onError: (err) => toast.error(err.message),
