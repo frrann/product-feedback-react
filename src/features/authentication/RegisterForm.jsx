@@ -31,7 +31,7 @@ function RegisterForm() {
         profile: {
           name,
           username: generateUsernameWithRandomNumber(name),
-          image: 'https://shorturl.at/flC12',
+          image: 'http://tinyurl.com/3cr9zj9r',
         },
       },
       {
